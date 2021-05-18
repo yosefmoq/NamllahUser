@@ -1,3 +1,96 @@
 <resources>
-    <string name="app_name">NamllahUser</string>
+    <string name="app_name">Namllah Provider</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skip">SKIP</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get started</string>
+    <string name="contact_with_the_customer">Contact with the customer</string>
+    <string name="contact_the_customer_and_inform_him_about_your_services">Contact the customer and inform him about your services.</string>
+    <string name="get_a_return">Get a Return</string>
+    <string name="you_can_get_paid_for_the_tasks_you_do">You can get paid for the tasks you do.</string>
+    <string name="find_your_work">Find your work</string>
+    <string name="we_provide_you_the_best_service_providers_and_technicians">We provide you the best service providers and technicians.</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="order_details">Order details</string>
+    <string name="verification_code">Verification code</string>
+    <string name="forget_password">Forget password</string>
+    <string name="username">Username</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="accept_the_terms_amp_conditions"><![CDATA[Accept the terms & conditions]]></string>
+    <string name="sign_up">Sign up</string>
+    <string name="or">or</string>
+    <string name="sign_in">Sign in</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="user_forget_password">Forget Password?</string>
+    <string name="new_user">New User?</string>
+    <string name="sign_in_with">Sign in w*ith</string>
+    <string name="verify">Verify</string>
+    <string name="otp_message">Please enter the 4 - digital verification code that was sent to the number:</string>
+    <string name="otp_hint">****</string>
+    <string name="resend_it">Resend it</string>
+    <string name="not_received">Not Received?</string>
+    <string name="fake_mobile_number">(+970) 599 123 456</string>
+    <string name="enter_your_phone_number_to_reset_the_password_and_then_click_send">Enter your phone number to reset the password and then click send.</string>
+    <string name="send_code">Send Code</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="notification">Notification</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
+    <string name="order_photo">Order Photo</string>
+    <string name="see_more">See More</string>
+    <string name="problem_description">Problem Description</string>
+    <string name="location_details">Location Details</string>
+    <string name="lorem_text">Enter your phone number to reset the password and then click send. Enter your phone number to reset the password and then click send. Enter your phone number to reset the password and then click send. Enter your phone number to reset the password and then click send. Enter your phone number to reset the password and then click send.</string>
+    <string name="accept">Accept</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="fake_address">Gaza, Palestine</string>
+    <string name="fake_name">Ismail A. Amassi</string>
+    <string name="fake_nationality">Palestinian</string>
+    <string name="my_services">My Services</string>
+    <string name="add_new_services">Add New Services</string>
+    <string name="language">Language</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
+    <string name="address">Address</string>
+    <string name="nationality">Nationality</string>
+
+    <string name="change_phone_number_title">Change Phone Number</string>
+    <string name="change_phone_number_message">We will sent a code to your new mobile number</string>
+
+    <string name="change_username_title">Change Username</string>
+    <string name="change_username_message">Enter New Name</string>
+
+    <string name="change_password_title">Change Password</string>
+    <string name="change_password_message">Enter New Password</string>
+
+    <string name="change_address_title">Change Address</string>
+    <string name="change_address_message">Enter New Address</string>
+
+
+    <string name="change_language_title">Change Language</string>
+    <string name="change_language_message">Choose New Language</string>
+
+    <string name="current_password">Current Password</string>
+    <string name="save">Save</string>
+    <string name="arabic">Arabic</string>
+    <string name="english">English</string>
+    <string name="start_work">Start Work</string>
+    <string name="fake_time">02:13:08</string>
+    <string name="pause">Pause</string>
+    <string name="finish">Finish</string>
+    <string name="was_it_with_you_or_arrived_at_delivery">Was It With You Or Arrived At Delivery?</string>
+    <string name="with_me">With Me</string>
+    <string name="delivery">Delivery</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_price">Item Price</string>
+    <string name="select_service_you_provide">Select Service You Provide</string>
+    <string name="select_areas_you_cover">Select Areas You Cover</string>
+    <string name="add">ADD</string>
+    <string name="click_here_to_select_areas_from_list">Click here to select areas from list</string>
+
 </resources>
