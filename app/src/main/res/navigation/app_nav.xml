@@ -111,6 +111,25 @@
         android:id="@+id/action_global_signInFragment"
         app:destination="@id/signInFragment"
         app:launchSingleTop="true" />
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.app.namllahuser.presentation.fragments.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" >
+        <action
+            android:id="@+id/action_testFragment_to_test2Fragment"
+            app:destination="@id/test2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/test2Fragment"
+        android:name="com.app.namllahuser.presentation.fragments.Test2Fragment"
+        android:label="fragment_test2"
+        tools:layout="@layout/fragment_test2" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 
 
 </navigation>

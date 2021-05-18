@@ -99,11 +99,11 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         if (signUpResponse.status!!) {
             //Show Message to User With Activation Code
             //Navigate to Verification Code UI
-//            findNavController().navigate(
-//                SignUpFragmentDirections.actionSignUpFragmentToVerificationCodeFragment(
-//                    phoneNumber = phoneNumber
-//                )
-//            )
+            findNavController().navigate(
+                SignUpFragmentDirections.actionSignUpFragmentToVerificationCodeFragment(
+                    phoneNumber = phoneNumber
+                )
+            )
         } else {
             //Show Message to User With Error Message
             val errorMessage = signUpResponse.msg ?: "Something error, Please try again later"
