@@ -15,4 +15,10 @@ data class SignInResponse(
     var message: String? = "",
     @SerializedName("errors")
     val errors: Errors? = null
-)
+
+
+) {
+    override fun toString(): String {
+        return "SignInResponse(userDto=$userDto, status=$status, error=$error, message=$message, errors=$errors)"
+    }
+}

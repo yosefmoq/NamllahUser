@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.app.namllahuser.data.auth.sign_up.SignUpResponse
 import com.app.namllahuser.R
 import com.app.namllahuser.databinding.FragmentSignUpBinding
+import com.app.namllahuser.presentation.utils.DialogUtils
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -23,6 +26,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     private val signUpViewModel: SignUpViewModel by viewModels()
     private var fragmentSignUpBinding: FragmentSignUpBinding? = null
     private var phoneNumber = ""
+    lateinit var dialogUtils: DialogUtils
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +36,8 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         fragmentSignUpBinding = FragmentSignUpBinding.inflate(inflater, container, false)
         return fragmentSignUpBinding?.apply {
             actionOnClick = this@SignUpFragment
+            dialogUtils =DialogUtils(requireActivity())
+
         }?.root
     }
 
@@ -77,37 +83,38 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     }
 
     private fun observeLiveData() {
-        signUpViewModel.loadingLiveData.observe(viewLifecycleOwner, {
-            Timber.tag(TAG).d("observeLiveData : Loading Status $it")
+        signUpViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer{
+            dialogUtils.loading(it)
         })
 
-        signUpViewModel.errorLiveData.observe(viewLifecycleOwner, {
-            Timber.tag(TAG).e("observeLiveData : Error Message ${Gson().toJson(it.message)}")
-            it.printStackTrace()
+        signUpViewModel.errorLiveData.observe(viewLifecycleOwner, Observer{
+            Timber.tag(TAG).e("observeLiveData : Error Message ${Gson().toJson(it)}")
+            dialogUtils.showFailAlert(it)
         })
 
-        signUpViewModel.signUpLiveData.observe(viewLifecycleOwner, {
+        signUpViewModel.signUpLiveData.observe(viewLifecycleOwner, Observer{
             it?.let {
                 handleSignUpResponse(it)
                 //To Stop Livedata
-                signUpViewModel.signUpLiveData.postValue(null)
+//                signUpViewModel.signUpLiveData.postValue(null)
             }
         })
     }
 
     private fun handleSignUpResponse(signUpResponse: SignUpResponse) {
+        findNavController().navigate(
+            SignUpFragmentDirections.actionSignUpFragmentToVerificationCodeFragment(
+                phoneNumber = phoneNumber
+            )
+        )
+
         if (signUpResponse.status!!) {
             //Show Message to User With Activation Code
             //Navigate to Verification Code UI
-            findNavController().navigate(
-                SignUpFragmentDirections.actionSignUpFragmentToVerificationCodeFragment(
-                    phoneNumber = phoneNumber
-                )
-            )
         } else {
             //Show Message to User With Error Message
             val errorMessage = signUpResponse.msg ?: "Something error, Please try again later"
-            signUpViewModel.changeErrorMessage(Throwable(errorMessage))
+            signUpViewModel.changeErrorMessage(errorMessage)
         }
     }
 

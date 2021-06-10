@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_splashFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
-        <action
-            android:id="@+id/action_splashFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -38,9 +35,6 @@
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in">
         <action
-            android:id="@+id/action_signInFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
         <action
@@ -48,21 +42,10 @@
             app:destination="@id/forgetPasswordFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.app.namllahuser.presentation.fragments.main.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
-    <fragment
         android:id="@+id/signUpFragment"
         android:name="com.app.namllahuser.presentation.fragments.wizard.sign_up.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
-        <action
-            android:id="@+id/action_signUpFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/main_nav_graph"
-            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
@@ -81,9 +64,6 @@
         <argument
             android:name="phone_number"
             app:argType="string" />
-        <action
-            android:id="@+id/action_verificationCodeFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
@@ -98,28 +78,23 @@
         android:id="@+id/resetPasswordFragment"
         android:name="com.app.namllahuser.presentation.fragments.wizard.reset_password.ResetPasswordFragment"
         android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password">
-        <action
-            android:id="@+id/action_resetPasswordFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/main_nav_graph"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_reset_password"/>
     <action
         android:id="@+id/action_global_signInFragment"
         app:destination="@id/signInFragment"
         app:launchSingleTop="true" />
-    <fragment
-        android:id="@+id/testFragment"
-        android:name="com.app.namllahuser.presentation.fragments.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" >
-        <action
-            android:id="@+id/action_testFragment_to_test2Fragment"
-            app:destination="@id/test2Fragment" />
-    </fragment>
+    <!--
+        <fragment
+            android:id="@+id/testFragment"
+            android:name="com.app.namllahuser.presentation.fragments.TestFragment"
+            android:label="fragment_test"
+            tools:layout="@layout/fragment_test" >
+            <action
+                android:id="@+id/action_testFragment_to_test2Fragment"
+                app:destination="@id/test2Fragment" />
+        </fragment>
+    -->
+<!--
     <fragment
         android:id="@+id/test2Fragment"
         android:name="com.app.namllahuser.presentation.fragments.Test2Fragment"
@@ -130,6 +105,7 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
+-->
 
 
 </navigation>

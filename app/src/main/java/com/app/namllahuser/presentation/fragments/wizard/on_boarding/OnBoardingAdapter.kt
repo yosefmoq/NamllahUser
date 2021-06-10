@@ -2,13 +2,16 @@ package com.app.namllahuser.presentation.fragments.wizard.on_boarding
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
+import com.app.namllahuser.R
 import java.util.*
 
 internal class OnBoardingAdapter : PagerAdapter() {
     private var viewList: MutableList<View>
     override fun instantiateItem(collection: ViewGroup, position: Int): Any {
         val view = viewList[position]
+
         collection.addView(view)
         return view
     }
@@ -29,6 +32,7 @@ internal class OnBoardingAdapter : PagerAdapter() {
     override fun getItemPosition(`object`: Any): Int {
         return POSITION_NONE
     }
+
 
     var data: List<View>?
         get() {

@@ -9,6 +9,7 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
 
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="android:actionMenuTextColor">@color/white</item>
@@ -38,4 +39,10 @@
         <item name="android:background">@drawable/selector_primary_bg</item>
         <item name="android:textColor">@drawable/selector_primary_color</item>
     </style>
+    <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
 </resources>

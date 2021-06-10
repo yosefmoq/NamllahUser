@@ -1,4 +1,4 @@
-package com.app.namllahprovider.app
+package com.app.namllahuser.app
 
 import android.app.Application
 import android.content.Context

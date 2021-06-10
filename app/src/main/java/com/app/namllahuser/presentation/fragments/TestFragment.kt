@@ -26,7 +26,7 @@ class TestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button!!.setOnClickListener {
-            findNavController().navigate(R.id.action_testFragment_to_test2Fragment)
+//            findNavController().navigate(R.id.action_testFragment_to_test2Fragment)
         }
     }
 

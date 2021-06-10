@@ -1,9 +1,12 @@
 package com.app.namllahuser.presentation.fragments.wizard.on_boarding
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -41,6 +44,8 @@ class OnBoardingFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initScreens()
         initViews()
+
+
     }
 
     private fun initScreens() {
@@ -70,6 +75,7 @@ class OnBoardingFragment : Fragment(), View.OnClickListener {
                 override fun onPageSelected(position: Int) {
                     currentIndex = position
                     fragmentOnBoardingBinding?.pageIndicatorView?.selection = position
+
                     if (position != lastIndex) {
                         fragmentOnBoardingBinding?.tvSkip?.visibility = View.VISIBLE
                         fragmentOnBoardingBinding?.tvNext?.visibility = View.VISIBLE
@@ -80,6 +86,8 @@ class OnBoardingFragment : Fragment(), View.OnClickListener {
                         fragmentOnBoardingBinding?.tvNext?.visibility = View.GONE
                         fragmentOnBoardingBinding?.btnGetStarted?.visibility = View.VISIBLE
                     }
+                    animateImages()
+
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {
@@ -87,6 +95,8 @@ class OnBoardingFragment : Fragment(), View.OnClickListener {
                 }
             })
         }
+        animateImages()
+//        fragmentOnBoardingBinding!!.ivOnbordingTop.animate().translationY(0f).duration = 1000
     }
 
     companion object {
@@ -103,5 +113,29 @@ class OnBoardingFragment : Fragment(), View.OnClickListener {
                 findNavController().navigate(R.id.action_onBoardingFragment_to_signInFragment)
             }
         }
+    }
+
+    fun animateImages(){
+        object: CountDownTimer(4000,2000){
+            override fun onFinish() {
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+
+                if(millisUntilFinished>2000){
+                    fragmentOnBoardingBinding!!.ivOnbordingTop.animate().translationY(170f).duration = 2000
+                    fragmentOnBoardingBinding!!.ivOnbordingBottomLeft.animate().translationY(-150f).duration = 2000
+                    fragmentOnBoardingBinding!!.ivOnbordingBottomRight.animate().translationY(-150f).duration = 2000
+
+                }else{
+                    fragmentOnBoardingBinding!!.ivOnbordingTop.animate().translationY(0f).duration = 2000
+                    fragmentOnBoardingBinding!!.ivOnbordingBottomLeft.animate().translationY(0f).duration = 2000
+                    fragmentOnBoardingBinding!!.ivOnbordingBottomRight.animate().translationY(0f).duration = 2000
+
+                }
+            }
+
+        }.start()
+
     }
 }

@@ -1,5 +1,6 @@
 package com.app.namllahuser.presentation.fragments.wizard.splash
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.app.namllahuser.R
 import com.app.namllahuser.databinding.FragmentSplashBinding
+import com.app.namllahuser.presentation.MainActivity
+import com.app.namllahuser.presentation.activities.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -50,19 +53,21 @@ class SplashFragment : Fragment() {
         Timber.tag(TAG).d("moveToNextUI : ")
         val isLogin = splashViewModel.isLogin()
         val isSeenOnBoarding = splashViewModel.isSeenOnBoarding()
-        val destination = if (isLogin) {
-            //Go to Main
-            R.id.action_splashFragment_to_mainFragment
-        } else {
+        if(isLogin){
+            startActivity(HomeActivity.getIntent(requireActivity()))
+            requireActivity().finishAffinity();
+        }else{
+            var  destination = 0;
             if (!isSeenOnBoarding) {
                 //Go to Boarding Screen
-                R.id.action_splashFragment_to_onBoardingFragment
+                destination = R.id.action_splashFragment_to_onBoardingFragment
             } else {
                 //Go to Login Screen
-                R.id.action_splashFragment_to_signInFragment
+                destination = R.id.action_splashFragment_to_signInFragment
             }
+            findNavController().navigate(destination)
         }
-        findNavController().navigate(destination)
+
     }
 
     companion object {

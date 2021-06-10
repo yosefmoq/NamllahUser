@@ -1,14 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.fragments.main.profile.profile.ProfileFragment">
+    android:layout_height="wrap_content"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        tools:context=".presentation.fragments.main.profile.profile.ProfileFragment">
 
-</FrameLayout>
+
+        <include
+            android:id="@+id/include3"
+            layout="@layout/home_toolbar" />
+
+        <ImageView
+            android:id="@+id/ivProUserImage"
+            android:layout_width="@dimen/_62sdp"
+            android:layout_height="@dimen/_62sdp"
+            android:layout_marginStart="@dimen/_38sdp"
+            android:layout_marginTop="@dimen/_19sdp"
+            android:src="@drawable/person"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include3" />
+
+        <TextView
+            android:id="@+id/tvProUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Mohammed Hamed"
+            android:textColor="#242424"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintStart_toEndOf="@+id/ivProUserImage"
+            app:layout_constraintTop_toTopOf="@+id/ivProUserImage" />
+
+        <TextView
+            android:id="@+id/tvProLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:drawableEnd="@drawable/ic_map_marker"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center"
+            android:text="Gaza, Palestine"
+            android:textColor="@color/primary_color"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="@+id/tvProUsername"
+            app:layout_constraintTop_toBottomOf="@+id/tvProUsername" />
+
+        <TextView
+            android:id="@+id/tvProEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:background="@drawable/bg_profile_text"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:text="@string/editProfile"
+            android:textColor="#242424"
+            android:textSize="@dimen/_12ssp"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
+            app:drawableStartCompat="@drawable/ic_edit"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/ivProUserImage" />
+
+        <TextView
+            android:id="@+id/tvProAccountCharging"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@drawable/bg_profile_text"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:text="@string/accountCharging"
+            android:textColor="#242424"
+            android:textSize="@dimen/_12ssp"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
+            app:drawableStartCompat="@drawable/ic_account_charging"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/tvProEdit" />
+
+        <TextView
+            android:id="@+id/tvProAboutUs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_19sdp"
+            android:background="@drawable/bg_profile_text"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:text="@string/aboutUs"
+            android:textColor="#242424"
+            android:textSize="@dimen/_12ssp"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
+            app:drawableStartCompat="@drawable/ic_about_us"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/tvProAccountCharging" />
+
+        <TextView
+            android:id="@+id/tvProContactUs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@drawable/bg_profile_text"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:text="@string/contactUs"
+            android:textColor="#242424"
+            android:textSize="@dimen/_12ssp"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
+            app:drawableStartCompat="@drawable/ic_contact_us"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/tvProAboutUs" />
+
+        <TextView
+            android:id="@+id/tvProTerm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@drawable/bg_profile_text"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:text="@string/term"
+            android:textColor="#242424"
+            android:textSize="@dimen/_12ssp"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
+            app:drawableStartCompat="@drawable/ic_term"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/tvProContactUs" />
+
+        <TextView
+            android:id="@+id/tvProPrivacy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@drawable/bg_profile_text"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:text="@string/privacy"
+            android:textColor="#242424"
+            android:textSize="@dimen/_12ssp"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
+            app:drawableStartCompat="@drawable/ic_privacy"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/tvProTerm" />
+
+        <TextView
+            android:id="@+id/tvProSignout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@drawable/bg_profile_text"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:text="@string/signOut"
+            android:textColor="#242424"
+            android:textSize="@dimen/_12ssp"
+            app:drawableEndCompat="@drawable/ic_right_arrow"
+            app:drawableStartCompat="@drawable/ic_logout"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/tvProPrivacy" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_16sdp" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivProUserImage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/testShimmer">
+
+    <fragment
+        android:id="@+id/mainFragment3"
+        android:name="com.app.namllahuser.presentation.fragments.main.MainFragment"
+        android:label="MainFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.edit_profile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_changeUsernameFragment"
+            app:destination="@id/changeUsernameFragment" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_changePhonenumberFragment"
+            app:destination="@id/changePhonenumberFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/changePasswordFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.edit_profile.changePassword.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"/>
+    <dialog
+        android:id="@+id/changeUsernameFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.edit_profile.changeUsername.ChangeUsernameFragment"
+        android:label="ChangeUsernameFragment" />
+    <dialog
+        android:id="@+id/changePhonenumberFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.edit_profile.changePhone.ChangePhoneNumberFragment"
+        android:label="ChangePhonenumberFragment" />
+    <fragment
+        android:id="@+id/orderStatusFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.stateOrder.OrderStatusFragment"
+        android:label="fragment_order_status"
+        tools:layout="@layout/fragment_order_status" />
+    <fragment
+        android:id="@+id/testShimmer"
+        android:name="com.app.namllahuser.TestShimmer"
+        android:label="fragment_test_shimmer"
+        tools:layout="@layout/fragment_test_shimmer" />
+</navigation>

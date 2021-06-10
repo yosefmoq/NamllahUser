@@ -20,8 +20,8 @@ data class UserDto(
     val wallet: String,
     val token: String
 ) {
-    override fun toString(): String {
-        return Gson().toJson(this)
+        override fun toString(): String {
+        return "UserDto(id=$id, mobile='$mobile', settings=$settings, images='$images', name='$name', language=$language, type='$type', status=$status, isComplete=$isComplete, services=$services, lat='$lat', lng='$lng', rate=$rate, wallet='$wallet', token='$token')"
     }
 }
 

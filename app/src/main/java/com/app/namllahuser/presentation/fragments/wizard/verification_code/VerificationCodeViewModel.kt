@@ -8,6 +8,7 @@ import com.app.namllahuser.data.model.UserDto
 import com.app.namllahuser.domain.repository.AuthRepository
 import com.app.namllahuser.domain.repository.ConfigRepository
 import com.app.namllahuser.presentation.base.BaseViewModel
+import com.app.namllahuser.presentation.base.HandelError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,7 +35,12 @@ class VerificationCodeViewModel @Inject constructor(
                         verificationCodeLiveData.postValue(it)
                         changeLoadingStatus(false)
                     }, {
-                        changeErrorMessage(it)
+                        parseError(it,object:HandelError{
+                            override fun showError(error: String) {
+                                changeErrorMessage(error)
+                            }
+
+                        })
                         verificationCodeLiveData.postValue(null)
                         changeLoadingStatus(false)
                     }, {

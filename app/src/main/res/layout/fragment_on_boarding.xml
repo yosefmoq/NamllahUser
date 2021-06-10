@@ -15,10 +15,51 @@
         android:layout_height="match_parent"
         tools:context=".presentation.fragments.wizard.on_boarding.OnBoardingFragment">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clParent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_onbording"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" >
+
+            <ImageView
+                android:id="@+id/ivOnbordingTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_onbording_top" />
+
+            <ImageView
+                android:id="@+id/ivOnbordingBottomLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/ivOnbordingTop"
+                app:layout_constraintTop_toBottomOf="@+id/ivOnbordingTop"
+                app:srcCompat="@drawable/ic_onbording_bottom_left" />
+
+            <ImageView
+                android:id="@+id/ivOnbordingBottomRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/ivOnbordingTop"
+                app:layout_constraintTop_toBottomOf="@+id/ivOnbordingTop"
+                app:srcCompat="@drawable/ic_onbording_bottom_right" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_49sdp"
+            app:layout_constraintBottom_toTopOf="@+id/pageIndicatorView"
+            app:layout_constraintTop_toBottomOf="@+id/clParent">
 
         </androidx.viewpager.widget.ViewPager>
 
