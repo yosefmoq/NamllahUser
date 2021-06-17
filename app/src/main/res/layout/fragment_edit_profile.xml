@@ -5,6 +5,9 @@
             name="actionOnClick"
             type="android.view.View.OnClickListener" />
 
+        <variable
+            name="userDto"
+            type="com.app.namllahuser.data.model.UserDto" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,9 +31,9 @@
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"
             android:layout_marginTop="@dimen/_19sdp"
-            android:src="@drawable/person"
             app:civ_border_color="#0080C6"
             app:civ_border_width="2dp"
+            imageUrl="@{userDto.images.med}"
             android:onClick="@{(view)->actionOnClick.onClick(view)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +72,7 @@
                 android:hint="@string/username"
                 android:paddingStart="@dimen/_6sdp"
                 android:paddingEnd="@dimen/_6sdp"
-                android:text="Mohammed Hamed"
+                android:text="@{userDto.name}"
                 android:textColor="#242424"
                 android:textColorHint="#ABABAB"
                 android:textSize="@dimen/_11ssp" />
@@ -99,7 +102,7 @@
                 android:onClick="@{(view)->actionOnClick.onClick(view)}"
                 android:paddingStart="@dimen/_6sdp"
                 android:paddingEnd="@dimen/_6sdp"
-                android:text="+972595119980"
+                android:text="@{userDto.mobile}"
                 android:textColor="#242424"
                 android:textColorHint="#ABABAB"
                 android:textSize="@dimen/_11ssp" />
@@ -131,7 +134,7 @@
                 android:onClick="@{(view)->actionOnClick.onClick(view)}"
 
                 android:paddingEnd="@dimen/_6sdp"
-                android:text="Mohammed Hamed"
+                android:text="@{userDto.name}"
                 android:textColor="#242424"
                 android:textColorHint="#ABABAB"
                 android:textSize="@dimen/_11ssp" />

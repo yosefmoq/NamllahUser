@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_signInFragment_to_forgetPasswordFragment"
             app:destination="@id/forgetPasswordFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_verificationCodeFragment"
+            app:destination="@id/verificationCodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -64,6 +67,9 @@
         <argument
             android:name="phone_number"
             app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="integer"/>
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
@@ -78,7 +84,10 @@
         android:id="@+id/resetPasswordFragment"
         android:name="com.app.namllahuser.presentation.fragments.wizard.reset_password.ResetPasswordFragment"
         android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password"/>
+        tools:layout="@layout/fragment_reset_password">
+        <argument android:name="phoneNumber" app:argType="string"/>
+
+    </fragment>
     <action
         android:id="@+id/action_global_signInFragment"
         app:destination="@id/signInFragment"

@@ -25,11 +25,13 @@ class DialogUtils(val activity: Activity) {
     fun loading(boolean: Boolean) {
 
         if (boolean) {
-            if (!sweetAlertDialog.isShowing)
+            if (!sweetAlertDialog.isShowing){
+                sweetAlertDialogSuccess.create()
                 sweetAlertDialog.show()
+            }
         } else
             if (sweetAlertDialog.isShowing)
-                sweetAlertDialog.dismissWithAnimation()
+                sweetAlertDialog.hide()
 
     }
 
@@ -46,6 +48,7 @@ class DialogUtils(val activity: Activity) {
             sweetAlertDialogSuccess.dismissWithAnimation()
             sweetAlertDialogSuccess.titleText = dialogData.title
             sweetAlertDialogSuccess.contentText = dialogData.message
+            sweetAlertDialogSuccess.create()
             sweetAlertDialogSuccess.show()
         }
     }

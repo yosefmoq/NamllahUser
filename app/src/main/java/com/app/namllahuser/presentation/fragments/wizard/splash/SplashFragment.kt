@@ -54,7 +54,7 @@ class SplashFragment : Fragment() {
         val isLogin = splashViewModel.isLogin()
         val isSeenOnBoarding = splashViewModel.isSeenOnBoarding()
         if(isLogin){
-            startActivity(HomeActivity.getIntent(requireActivity()))
+            startActivity(HomeActivity.getIntent(requireActivity(),1))
             requireActivity().finishAffinity();
         }else{
             var  destination = 0;

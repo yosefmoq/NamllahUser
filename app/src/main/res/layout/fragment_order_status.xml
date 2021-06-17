@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vFv" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/tvTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
@@ -83,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vFs" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/tvThree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vFt" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/tvFour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
@@ -126,14 +126,6 @@
         app:layout_constraintStart_toStartOf="@+id/rb4"
         app:layout_constraintTop_toBottomOf="@+id/vFt" />
 
-    <View
-        android:id="@+id/vFiff"
-        android:layout_width="2dp"
-        android:layout_height="@dimen/_70sdp"
-        android:background="@color/view_unselected"
-        app:layout_constraintEnd_toEndOf="@+id/rb3"
-        app:layout_constraintStart_toStartOf="@+id/rb3"
-        app:layout_constraintTop_toBottomOf="@+id/rb3" />
 
     <RadioButton
         android:id="@+id/rb5"
@@ -147,7 +139,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vFf" />
 
     <TextView
-        android:id="@+id/textView33"
+        android:id="@+id/tvFive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"

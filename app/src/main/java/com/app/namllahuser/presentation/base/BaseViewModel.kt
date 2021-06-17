@@ -1,10 +1,8 @@
 package com.app.namllahuser.presentation.base
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.app.namllahuser.R
 import com.app.namllahuser.data.base.ErrorResponse
 import com.google.gson.Gson
 import com.google.gson.TypeAdapter
@@ -13,8 +11,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import okhttp3.ResponseBody
-import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
 import kotlin.coroutines.CoroutineContext
@@ -67,36 +63,31 @@ abstract class BaseViewModel constructor(application: Application) : AndroidView
     }
 
     open fun parseError(t: Throwable, handelError: HandelError?) {
-        if (t is HttpException) {
-            val body: ResponseBody = t.response()!!.errorBody()!!
             val gson = Gson()
             try {
                 val adapter: TypeAdapter<ErrorResponse> = gson.getAdapter(ErrorResponse::class.java)
-                val errorParser: ErrorResponse = adapter.fromJson(body.string())
+                val errorParser: ErrorResponse = adapter.fromJson(t.message)
                 errorResLiveData.postValue(errorParser)
                 handelError?.showError(getErrorMMessages(errorParser))
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        } else {
-            if (handelError != null) handelError.showError(getApplication<Application>().getString(R.string.general_error_message))
-        }
     }
 
      fun getErrorMMessages(errorParser: ErrorResponse): String {
-/*
-        if (errorParser.getErrorsMessages() == null) {
-            return errorParser.getMessage()
+
+        if (errorParser.errorsMessages == null) {
+            return errorParser.msg!!
         }
-*/
+
         var errorMMessages =
-            getErrorMMessages(errorParser.getErrorsMessages()!!.mobile)
-        errorMMessages += getErrorMMessages(errorParser.getErrorsMessages()!!.country_code)
-        errorMMessages += getErrorMMessages(errorParser.getErrorsMessages()!!.email)
-        errorMMessages += getErrorMMessages(errorParser.getErrorsMessages()!!.name)
-        errorMMessages += getErrorMMessages(errorParser.getErrorsMessages()!!.password)
-        errorMMessages += getErrorMMessages(errorParser.getErrorsMessages()!!.username)
-        errorMMessages += getErrorMMessages(errorParser.getErrorsMessages()!!.images)
+            getErrorMMessages(errorParser.errorsMessages!!.mobile)
+        errorMMessages += getErrorMMessages(errorParser.errorsMessages!!.country_code)
+        errorMMessages += getErrorMMessages(errorParser.errorsMessages!!.email)
+        errorMMessages += getErrorMMessages(errorParser.errorsMessages!!.name)
+        errorMMessages += getErrorMMessages(errorParser.errorsMessages!!.password)
+        errorMMessages += getErrorMMessages(errorParser.errorsMessages!!.username)
+        errorMMessages += getErrorMMessages(errorParser.errorsMessages!!.images)
         return errorMMessages!!.trim { it <= ' ' }
     }
 

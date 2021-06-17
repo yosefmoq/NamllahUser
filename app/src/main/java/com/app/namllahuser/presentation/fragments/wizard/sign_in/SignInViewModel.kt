@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import com.app.namllahuser.data.auth.forget_password.ForgetPasswordResponse
 import com.app.namllahuser.data.auth.sign_in.SignInResponse
 import com.app.namllahuser.data.model.UserDto
 import com.app.namllahuser.domain.repository.AuthRepository
@@ -14,6 +15,7 @@ import dagger.Provides
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +29,7 @@ class SignInViewModel @Inject constructor(
 
     var signInLiveData = MutableLiveData<SignInResponse?>()
 
+
     fun signInRequest(phoneNumber: String, password: String) {
         launch {
             changeLoadingStatus(true)
@@ -36,15 +39,12 @@ class SignInViewModel @Inject constructor(
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         signInLiveData.postValue(it)
-                        Log.v("ttt","success")
                         changeLoadingStatus(false)
                     }, {
-                        signInLiveData.postValue(null)
-                        Log.v("ttt","fail")
-                        Log.v("ttt",it.localizedMessage)
 
+                        signInLiveData.postValue(null)
                         changeLoadingStatus(false)
-                        parseError(it,object:HandelError{
+                        parseError(it, object : HandelError {
                             override fun showError(error: String) {
                                 changeErrorMessage(error)
                             }
@@ -57,6 +57,9 @@ class SignInViewModel @Inject constructor(
 
     fun saveUserDataLocal(userDto: UserDto) = launch {
         configRepository.setLoggedUser(userDto)
+    }
+    fun saveToken(token:String) = launch {
+        configRepository.setToken(token)
     }
 
     fun changeLoginStatus(newLoginStatus: Boolean) = launch {

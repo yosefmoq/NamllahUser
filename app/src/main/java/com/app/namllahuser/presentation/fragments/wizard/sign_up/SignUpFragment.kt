@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.app.namllahuser.data.auth.sign_up.SignUpResponse
 import com.app.namllahuser.R
 import com.app.namllahuser.databinding.FragmentSignUpBinding
+import com.app.namllahuser.domain.Constants.RESEND_TYPE_NORMAL
 import com.app.namllahuser.presentation.utils.DialogUtils
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -102,13 +103,15 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     }
 
     private fun handleSignUpResponse(signUpResponse: SignUpResponse) {
-        findNavController().navigate(
-            SignUpFragmentDirections.actionSignUpFragmentToVerificationCodeFragment(
-                phoneNumber = phoneNumber
-            )
-        )
 
         if (signUpResponse.status!!) {
+            findNavController().navigate(
+                SignUpFragmentDirections.actionSignUpFragmentToVerificationCodeFragment(
+                    phoneNumber = phoneNumber,
+                    type = RESEND_TYPE_NORMAL
+                )
+            )
+
             //Show Message to User With Activation Code
             //Navigate to Verification Code UI
         } else {

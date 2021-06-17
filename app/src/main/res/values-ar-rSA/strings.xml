@@ -33,6 +33,8 @@
 
     <string name="change_username_title">تغيير إسم المستخدم</string>
     <string name="change_username_message">إدخال اسم جديد</string>
+    <string name="finishOrder">إنهاء الطلب</string>
+    <string name="serviceProviders">مزودي الخدمة</string>
 
     <string name="change_password_title">تغيير كلمة المرور</string>
     <string name="change_password_message">إدخال كلمة مرور جديدة</string>
@@ -44,6 +46,15 @@
     <string name="provider_name">إسم مقدم الخدمة:</string>
     <string name="my_number">رقم هاتفي:</string>
     <string name="finish_and_order">إنهاء وتقديم</string>
+    <string name="select">إختيار</string>
+    <string name="successfully_send">تم إضافة طلبك بنجاح</string>
+
+
+    <string name="order_canceled">ملغاه</string>
+    <string name="order_waiting">قيد الإنتظار</string>
+    <string name="order_completed">مكتملة</string>
+    <string name="take_image">يحتاج هذا التطبيق للوصول الى صلاحية التخزين لإمكانية استيراد الصور</string>
+    <string name="update_profile">تم تحديث البروفايل بنجاح</string>
 
 
 </resources>

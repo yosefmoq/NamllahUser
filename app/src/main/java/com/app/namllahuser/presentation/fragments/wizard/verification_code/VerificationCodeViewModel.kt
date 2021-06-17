@@ -3,6 +3,7 @@ package com.app.namllahuser.presentation.fragments.wizard.verification_code
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import com.app.namllahuser.data.auth.forget_password.ForgetPasswordResponse
 import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse
 import com.app.namllahuser.data.model.UserDto
 import com.app.namllahuser.domain.repository.AuthRepository
@@ -10,6 +11,7 @@ import com.app.namllahuser.domain.repository.ConfigRepository
 import com.app.namllahuser.presentation.base.BaseViewModel
 import com.app.namllahuser.presentation.base.HandelError
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +24,7 @@ class VerificationCodeViewModel @Inject constructor(
 ) : BaseViewModel(application) {
 
     var verificationCodeLiveData = MutableLiveData<VerificationCodeResponse?>()
+    var resendCodeLiveData = MutableLiveData<ForgetPasswordResponse?>()
 
     fun verifyOTPCode(phoneNumber: String, code: Int) =
         launch {
@@ -56,4 +59,25 @@ class VerificationCodeViewModel @Inject constructor(
     fun changeLoginStatus(newLoginStatus: Boolean) = launch {
         configRepository.setLogin(newLoginStatus)
     }
+    fun resendCode(phoneNumber: String) {
+        launch {
+            changeLoginStatus(true)
+            disposable.add(
+                authRepository.resendOTPCode(phoneNumber).subscribeOn(ioScheduler)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        changeLoginStatus(false)
+                        resendCodeLiveData.postValue(it)
+                    }, {
+                        changeLoginStatus(false)
+                        changeErrorMessage(it)
+                    })
+            )
+        }
+
+    }
+    fun saveToken(token:String) = launch {
+        configRepository.setToken(token)
+    }
+
 }

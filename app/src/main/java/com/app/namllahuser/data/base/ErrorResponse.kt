@@ -6,24 +6,13 @@ import com.app.namllahuser.data.base.ErrorMessages
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class ErrorResponse {
+data class ErrorResponse(
     @SerializedName("errors")
     @Expose
-    private var errorsMessages: ErrorMessages? = null
+    var errorsMessages: ErrorMessages? = null,
 
-    fun ErrorResponse() {}
-
-
-    fun getErrorsMessages(): ErrorMessages? {
-        return errorsMessages
+): BaseResponse() {
+    override fun toString(): String {
+        return "ErrorResponse(errorsMessages=$errorsMessages)"
     }
-
-    fun setErrorsMessages(errorsMessages: ErrorMessages?) {
-        this.errorsMessages = errorsMessages
-    }
-
-
-
-
-
 }

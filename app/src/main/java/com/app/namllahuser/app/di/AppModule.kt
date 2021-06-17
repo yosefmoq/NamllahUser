@@ -1,10 +1,12 @@
 package com.app.namllahuser.app.di
 
 import android.content.Context
+import com.app.namllahuser.data.networkhelper.LoggingInterceptor
 import com.app.namllahuser.data.repository.ConfigRepositoryImpl
-import com.app.namllahuser.domain.repository.ConfigRepository
 import com.app.namllahuser.data.sharedvariables.SharedVariables
 import com.app.namllahuser.domain.Constants
+import com.app.namllahuser.domain.repository.ConfigRepository
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
@@ -26,17 +29,20 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun okHttpClient(): OkHttpClient {
+    fun okHttpClient(
+        configRepository: ConfigRepository
+    ): OkHttpClient {
 //        var HttpLoggingInterceptor = HttpLoggingInterceptor()
 //        HttpLoggingInterceptor.level = okhttp3.logging.HttpLoggingInterceptor.Level.BODY
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .callTimeout(10, TimeUnit.MINUTES)
             .connectTimeout(10, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.MINUTES)
             .writeTimeout(10, TimeUnit.MINUTES)
-            .addInterceptor(httpLoggingInterceptor).build()
+            .addInterceptor(LoggingInterceptor(configRepository))
+            .build()
     }
 
 
@@ -45,9 +51,10 @@ class AppModule {
     fun provideActivationRetrofitInstance(okHttpClient: OkHttpClient): Retrofit.Builder =
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient.newBuilder().build())
+
 
     @Provides
     fun provideConfigRepository(

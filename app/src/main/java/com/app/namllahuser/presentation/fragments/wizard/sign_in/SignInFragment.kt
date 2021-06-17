@@ -1,6 +1,5 @@
 package com.app.namllahuser.presentation.fragments.wizard.sign_in
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,15 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.app.namllahuser.R
 import com.app.namllahuser.data.auth.sign_in.SignInResponse
 import com.app.namllahuser.databinding.FragmentSignInBinding
+import com.app.namllahuser.domain.Constants.RESEND_TYPE_VARIFY
 import com.app.namllahuser.presentation.activities.HomeActivity
 import com.app.namllahuser.presentation.utils.DialogUtils
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SignInFragment : Fragment(), View.OnClickListener {
@@ -81,11 +79,12 @@ class SignInFragment : Fragment(), View.OnClickListener {
             dialogUtils.loading(it)
         })
 
-        signInViewModel.errorLiveData.observe(viewLifecycleOwner ,Observer{
-            Timber.tag(TAG).e("observeLiveData : Error Message ${it}")
+        signInViewModel.errorLiveData.observe(viewLifecycleOwner , Observer{
+                dialogUtils.showFailAlert(it)
+
         })
 
-        signInViewModel.signInLiveData.observe(viewLifecycleOwner, {
+        signInViewModel.signInLiveData.observe(viewLifecycleOwner, Observer{
             it?.let {
                 handleSignInResponse(it)
                 //To Stop Livedata
@@ -95,18 +94,27 @@ class SignInFragment : Fragment(), View.OnClickListener {
     }
 
     private fun handleSignInResponse(signInResponse: SignInResponse) {
+        if(signInResponse.status!!){
+            if (signInResponse.userDto != null) {
+                signInViewModel.saveUserDataLocal(signInResponse.userDto!!)
+                signInViewModel.saveToken(signInResponse.userDto!!.token)
+                signInViewModel.changeLoginStatus(true)
+                startActivity(HomeActivity.getIntent(requireActivity(),1))
+                requireActivity().finishAffinity()
+            } else {
+                val errorMessage = signInResponse.error ?: signInResponse.msg
+                ?: "Something error, Please try again later"
+                Log.v("ttt",errorMessage)
+                signInViewModel.changeErrorMessage(errorMessage)
+            }
+        }else{
+            if(signInResponse.error == "auth.not_verified"){
+                Log.d(TAG, "handleSignInResponse: auth ${signInResponse.error}")
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToVerificationCodeFragment(phoneNumber = fragmentSignInBinding!!.etPhoneNumber.text.toString(),type = RESEND_TYPE_VARIFY  ))
+                fragmentSignInBinding!!.etPhoneNumber.setText("")
+                fragmentSignInBinding!!.etPassword.setText("")
 
-        if (signInResponse.userDto != null) {
-            signInViewModel.saveUserDataLocal(signInResponse.userDto!!)
-            signInViewModel.changeLoginStatus(true)
-            startActivity(HomeActivity.getIntent(requireActivity()))
-            requireActivity().finishAffinity()
-
-        } else {
-            val errorMessage = signInResponse.error ?: signInResponse.message
-            ?: "Something error, Please try again later"
-            Log.v("ttt",errorMessage)
-            signInViewModel.changeErrorMessage(errorMessage)
+            }
         }
     }
 

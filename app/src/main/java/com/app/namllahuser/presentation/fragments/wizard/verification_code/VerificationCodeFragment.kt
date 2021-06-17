@@ -1,23 +1,24 @@
 package com.app.namllahuser.presentation.fragments.wizard.verification_code
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse
 import com.app.namllahuser.R
 import com.app.namllahuser.databinding.FragmentVerificationCodeBinding
-import com.app.namllahuser.presentation.MainActivity
+import com.app.namllahuser.domain.Constants
 import com.app.namllahuser.presentation.activities.HomeActivity
 import com.app.namllahuser.presentation.base.DialogData
+import com.app.namllahuser.presentation.utils.toTimer
 import com.app.namllahuser.presentation.utils.DialogUtils
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -29,6 +30,8 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
 
     private var fragmentVerificationCodeBinding: FragmentVerificationCodeBinding? = null
     private var phoneNumber = ""
+    private var type = 1
+    private var timer: Long = 180000;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +42,7 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
             FragmentVerificationCodeBinding.inflate(inflater, container, false)
         return fragmentVerificationCodeBinding?.apply {
             actionOnClick = this@VerificationCodeFragment
-            dialogUtils  = DialogUtils(requireActivity())
+            dialogUtils = DialogUtils(requireActivity())
         }?.root
     }
 
@@ -48,28 +51,50 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
         initToolbar()
         arguments.let {
             phoneNumber = VerificationCodeFragmentArgs.fromBundle(it!!).phoneNumber
+            type = VerificationCodeFragmentArgs.fromBundle(it).type
+
             fragmentVerificationCodeBinding?.tvPhoneNumber?.text = phoneNumber
         }
+        if (type == Constants.RESEND_TYPE_NORMAL)
+            countDown()
+
+        if (type == Constants.RESEND_TYPE_VARIFY)
+            verificationCodeViewModel.resendCode(phoneNumber)
+
         observeLiveData()
     }
 
     private fun observeLiveData() {
-        verificationCodeViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer{
+        verificationCodeViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
             Timber.tag(TAG).d("observeLiveData : Loading Status $it")
             dialogUtils.loading(it)
         })
 
-        verificationCodeViewModel.errorLiveData.observe(viewLifecycleOwner, Observer{
+        verificationCodeViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
             Timber.tag(TAG).e("observeLiveData : Error Message ${it}")
             dialogUtils.showFailAlert(it)
         })
 
-        verificationCodeViewModel.dialogLiveData.observe(viewLifecycleOwner, Observer{
+        verificationCodeViewModel.dialogLiveData.observe(viewLifecycleOwner, Observer {
             Timber.tag(TAG).e("observeLiveData : Error Message $it")
 
         })
 
-        verificationCodeViewModel.verificationCodeLiveData.observe(viewLifecycleOwner, Observer{
+        verificationCodeViewModel.resendCodeLiveData.observe(viewLifecycleOwner, Observer {
+
+            if (it!!.status) {
+                countDown()
+                dialogUtils.showSuccessAlert("تم إرسال الكود بنجاح")
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "الرجاء الإنتظار قليلا قبل الإرسال مرة أخرى",
+                    Toast.LENGTH_SHORT
+                ).show()
+                dialogUtils.showFailAlert(it.msg)
+            }
+        })
+        verificationCodeViewModel.verificationCodeLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
 
                 handleVerifyCodeResponse(it)
@@ -80,33 +105,46 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun handleVerifyCodeResponse(verificationCodeResponse: VerificationCodeResponse) {
-        if (verificationCodeResponse.userDto != null) {
-            //Success Login
-            //Save User data in SP
-            verificationCodeViewModel.saveUserDataLocal(verificationCodeResponse.userDto!!)
-            verificationCodeViewModel.changeLoginStatus(true)
-            dialogUtils.showSuccessMessage(DialogData(title = "Success",message = "Success Verification"))
-            object:CountDownTimer(2000,1000){
-                override fun onFinish() {
-                    dialogUtils.hideSuccessMessage()
-                    startActivity(HomeActivity.getIntent(requireActivity()))
-                    requireActivity().finishAffinity()
-                }
+        if (verificationCodeResponse.status!!){
+            if (verificationCodeResponse.userDto != null) {
+                //Success Login
+                //Save User data in SP
+                verificationCodeViewModel.saveUserDataLocal(verificationCodeResponse.userDto!!)
+                verificationCodeViewModel.changeLoginStatus(true)
+                verificationCodeViewModel.saveToken(verificationCodeResponse.userDto!!.token)
+                dialogUtils.showSuccessAlert(msg = "Success validation")
+                object : CountDownTimer(2000, 1000) {
+                    override fun onFinish() {
+                        startActivity(HomeActivity.getIntent(requireActivity(), 1))
+                        requireActivity().finishAffinity()
+                    }
 
-                override fun onTick(millisUntilFinished: Long) {
+                    override fun onTick(millisUntilFinished: Long) {
 
-                }
+                    }
 
-            }.start()
-        } else {
-            if (verificationCodeResponse.status!!) {
-                //Account already active go to Login Page
-                verificationCodeViewModel.changeDialogLiveData(DialogData(title = "", message = ""))
+                }.start()
             } else {
-                //OTP Code is error
-                verificationCodeViewModel.changeDialogLiveData(DialogData(title = "", message = ""))
+                if (verificationCodeResponse.status!!) {
+                    //Account already active go to Login Page
+                    verificationCodeViewModel.changeDialogLiveData(
+                        DialogData(
+                            title = "",
+                            message = ""
+                        )
+                    )
+                } else {
+                    //OTP Code is error
+                    verificationCodeViewModel.changeDialogLiveData(
+                        DialogData(
+                            title = "",
+                            message = ""
+                        )
+                    )
+                }
             }
         }
+
     }
 
     private fun initToolbar() {
@@ -153,7 +191,32 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun onClickResendOTPCode() {
+        if (timer == 0.toLong()) {
+            verificationCodeViewModel.resendCode(phoneNumber)
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "الرجاء الإنتظار قليلا قبل الإرسال مرة أخرى",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
+    private fun countDown() {
+        Log.v("ttt", "countDown")
+        timer = 180000
+        object : CountDownTimer(180000, 1000) {
+            override fun onFinish() {
+                timer = 0
+                fragmentVerificationCodeBinding!!.tvTimer.setText("00:00")
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                Log.v("ttt", "text")
+                timer -= 1000
+                fragmentVerificationCodeBinding!!.tvTimer.setText(timer.toTimer())
+            }
+        }.start()
     }
 
 }

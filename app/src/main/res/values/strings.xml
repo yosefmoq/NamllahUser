@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Namllah Provider</string>
+    <string name="app_name">Namllah User</string>
 
     <string name="orders">Orders</string>
     <string name="notifications">Notifications</string>
@@ -26,6 +26,8 @@
     <string name="notification">Notification</string>
     <string name="profile">Profile</string>
     <string name="home">Home</string>
+    <string name="select">Select</string>
+    <string name="successfully_send">Your order has been successfully added</string>
 
     <string name="change_phone_number_title">Change Phone Number</string>
     <string name="change_phone_number_message">We will sent a code to your new mobile number</string>
@@ -45,6 +47,17 @@
     <string name="finish_and_order">Finish &amp; Order</string>
 
 
+    <string name="order_canceled">Canceled</string>
+    <string name="order_waiting">Waiting</string>
+    <string name="order_completed">Completed</string>
+    <string name="update_profile">The profile updated successfully</string>
+
+
+    <string name="our_services">Our services</string>
+    <string name="finishOrder">Finish order</string>
+    <string name="serviceProviders">Service Providers</string>
+
+    <string name="take_image">This app needs access to the storage even when you are getting pictures</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="skip">SKIP</string>
     <string name="next">Next</string>
@@ -114,6 +127,5 @@
     <string name="select_areas_you_cover">Select Areas You Cover</string>
     <string name="add">ADD</string>
     <string name="click_here_to_select_areas_from_list">Click here to select areas from list</string>
-    <string name="our_services">Our services</string>
 
 </resources>

@@ -23,6 +23,9 @@ class SharedVariables @Inject constructor(mContext: Context) {
 
     val mSemaphore: Semaphore
 
+    fun clearAllData(){
+        mSharedPreferenceEditor.clear().apply()
+    }
     fun setStringSharedVariable(flag: SharedValueFlags?, value: String?) {
         try {
             mSemaphore.acquire()
@@ -34,13 +37,13 @@ class SharedVariables @Inject constructor(mContext: Context) {
         }
     }
 
-    fun getStringSharedVariable(flag: SharedValueFlags): String? {
+    fun getStringSharedVariable(flag: SharedValueFlags,string: String): String? {
         var returnValue: String? = SPF_STRING_NO_VALUE_FOUND
         try {
             mSemaphore.acquire()
             returnValue = mSharedPreference!!.getString(
                 java.lang.String.valueOf(flag),
-                SPF_STRING_NO_VALUE_FOUND
+                string
             )
             mSemaphore.release()
         } catch (e: InterruptedException) {
