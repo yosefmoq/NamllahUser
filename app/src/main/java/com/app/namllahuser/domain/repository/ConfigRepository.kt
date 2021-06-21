@@ -26,4 +26,7 @@ interface ConfigRepository {
 
     fun getToken():String?
 
+    fun setFirebaseToken(token:String)
+
+    fun getFirebaseToken():String
 }

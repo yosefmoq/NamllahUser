@@ -5,6 +5,6 @@ import com.app.namllahuser.data.model.ServiceDto
 import com.app.namllahuser.data.model.order.ServiceData
 
 data class ServiceResponse(
-    val data:ServiceData
+    var data:MutableList<ServiceDto>
 ):BaseResponse() {
 }

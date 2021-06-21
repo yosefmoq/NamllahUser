@@ -9,7 +9,7 @@ data class NotificationDto(
 //    val notifiable_id:Int,
 //    val data:NotificationData,
     val data:NotificationData,
-    val create_at:String,
+    val created_at:String,
     val read_at:String?=""
 /*
     val name: String,

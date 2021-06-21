@@ -6,6 +6,7 @@ import com.app.namllahuser.data.main.notification.NotificationResponse
 import com.app.namllahuser.data.main.orders.OrderResponse
 import com.app.namllahuser.data.main.service.ServiceResponse
 import com.app.namllahuser.data.main.serviceProviders.ServiceProviderResponse
+import com.app.namllahuser.data.main.slider.SliderResponse
 import com.app.namllahuser.data.model.CreateOrderRequest
 import io.reactivex.Maybe
 import okhttp3.RequestBody
@@ -16,6 +17,8 @@ interface MainRepository {
     fun getNearServiceProviders(lat:Double,lng:Double,serviceId:Int):Maybe<ServiceProviderResponse>
 
     fun getOrders():Maybe<OrderResponse>
+
+    fun getSlider():Maybe<SliderResponse>
 
     fun getNotification():Maybe<NotificationResponse>
 
@@ -30,4 +33,10 @@ interface MainRepository {
     fun changeImage(image:RequestBody):Maybe<SignInResponse>
 
     fun postOrder(createOrderRequest: CreateOrderRequest):Maybe<BaseResponse>
+
+    fun cancelOrder(orderId:Int,reasonId:Int,reasonTitle:String):Maybe<BaseResponse>
+
+    fun updateToken(mobile:String,token:String):Maybe<BaseResponse>
+
+    fun readAll():Maybe<BaseResponse>
 }

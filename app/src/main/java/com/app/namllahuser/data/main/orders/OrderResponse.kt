@@ -5,6 +5,6 @@ import com.app.namllahuser.data.model.order.OrderData
 import com.app.namllahuser.data.model.order.OrderDto
 
 data class OrderResponse(
-    val data:OrderData
+    var data: MutableList<OrderDto>
 ):BaseResponse() {
 }

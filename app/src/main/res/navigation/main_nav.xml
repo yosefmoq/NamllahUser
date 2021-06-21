@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/orderStatusFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -21,6 +21,12 @@
         <action
             android:id="@+id/action_mainFragment_to_contactUsFragment"
             app:destination="@id/contactUsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_orderStatusFragment"
+            app:destination="@id/orderStatusFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -64,7 +70,10 @@
         android:id="@+id/orderStatusFragment"
         android:name="com.app.namllahuser.presentation.fragments.main.stateOrder.OrderStatusFragment"
         android:label="fragment_order_status"
-        tools:layout="@layout/fragment_order_status" />
+        tools:layout="@layout/fragment_order_status" >
+        <argument android:name="status" app:argType="integer"/>
+        <argument android:name="orderDto" app:argType="com.app.namllahuser.data.model.order.OrderDto"/>
+    </fragment>
     <fragment
         android:id="@+id/testShimmer"
         android:name="com.app.namllahuser.TestShimmer"
@@ -120,4 +129,9 @@
         android:label="contact_us_fragment"
         tools:layout="@layout/contact_us_fragment" />
 
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.app.namllahuser.presentation.fragments.pages.setting.SettingsFragment"
+        android:label="setting_fragment"
+        tools:layout="@layout/fragment_setting"/>
 </navigation>

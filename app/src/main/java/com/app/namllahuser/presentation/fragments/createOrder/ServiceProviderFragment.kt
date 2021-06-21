@@ -72,10 +72,10 @@ class ServiceProviderFragment : Fragment(), OnServiceProvidersClickListeners {
     fun observeData() {
         serviceViewModel.serviceProviders.observe(viewLifecycleOwner, Observer {
             if (it.status!!) {
-                it.data.data.forEach {
+                it.data.forEach {
                     it.category = serviceDto.title
                 }
-                serviceProviderAdapter.update(it.data.data)
+                serviceProviderAdapter.update(it.data)
 
             } else {
                 dialogUtils.showFailAlert(it.msg!!)

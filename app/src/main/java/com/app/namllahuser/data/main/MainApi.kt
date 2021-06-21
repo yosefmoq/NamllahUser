@@ -47,5 +47,21 @@ interface MainApi {
     fun postOrder(@Body createOrderRequest: CreateOrderRequest):Call<ResponseBody>
 
 
+    @GET("sliders")
+    fun sliders():Call<ResponseBody>
+
+
+    @FormUrlEncoded
+    @POST("customer/orders/{id}/cancel")
+    fun cancelOrder(@Path("id") orderId:Int,@Field("cancel_reason_id") reasonId:Int,@Field("cancel_reason") reasonTitle:String):Call<ResponseBody>
+
+
+    @FormUrlEncoded
+    @POST("user/notifications/update-firebase")
+    fun updateFirebase(@Field("mobile") mobile: String,@Field("token") token:String):Call<ResponseBody>
+
+
+    @GET("user/notifications/read-all")
+    fun readAll():Call<ResponseBody>
 
 }

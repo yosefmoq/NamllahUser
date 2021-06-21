@@ -38,6 +38,7 @@ class ForgetPasswordFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
+        observeLiveData()
     }
 
 
@@ -53,6 +54,7 @@ class ForgetPasswordFragment : Fragment(), View.OnClickListener {
             findNavController().popBackStack()
         }
     }
+
 
     companion object {
         private const val TAG = "ForgetPasswordFragment"

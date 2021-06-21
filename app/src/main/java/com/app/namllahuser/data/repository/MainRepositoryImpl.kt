@@ -7,6 +7,7 @@ import com.app.namllahuser.data.main.notification.NotificationResponse
 import com.app.namllahuser.data.main.orders.OrderResponse
 import com.app.namllahuser.data.main.service.ServiceResponse
 import com.app.namllahuser.data.main.serviceProviders.ServiceProviderResponse
+import com.app.namllahuser.data.main.slider.SliderResponse
 import com.app.namllahuser.data.model.CreateOrderRequest
 import com.app.namllahuser.domain.repository.MainRepository
 import io.reactivex.Maybe
@@ -28,6 +29,8 @@ class MainRepositoryImpl @Inject constructor(
 
     override fun getOrders(): Maybe<OrderResponse> = mainApiImpl.getOrders()
 
+    override fun getSlider(): Maybe<SliderResponse> =mainApiImpl.getSliders()
+
     override fun getNotification(): Maybe<NotificationResponse> = mainApiImpl.getNotification()
 
     override fun logout(): Maybe<BaseResponse> = mainApiImpl.logout()
@@ -45,6 +48,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override fun postOrder(createOrderRequest: CreateOrderRequest): Maybe<BaseResponse>  =
         mainApiImpl.postOrder(createOrderRequest)
+
+    override fun cancelOrder(orderId: Int, reasonId: Int, reasonTitle: String):Maybe<BaseResponse> = mainApiImpl.cancelOrder(orderId,reasonId,reasonTitle)
+    override fun updateToken(mobile: String, token: String): Maybe<BaseResponse> = mainApiImpl.saveFirebaseToken(mobile,token)
+    override fun readAll(): Maybe<BaseResponse> = mainApiImpl.readAllNotification()
 
 
 }

@@ -6,7 +6,7 @@ import java.io.Serializable
 
 data class ServiceDto (
     val id: Long,
-    val image: ServiceImage,
+    val image: UserImagesData,
     val title: String,
     val description: String
 ):Serializable{

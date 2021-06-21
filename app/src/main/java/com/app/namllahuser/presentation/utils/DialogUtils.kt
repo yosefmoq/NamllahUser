@@ -18,13 +18,13 @@ class DialogUtils(val activity: Activity) {
 
     init {
         sweetAlertDialog.setCancelable(false)
-
-
+        sweetAlertDialog.titleText = (activity.getString(R.string.loading))
     }
 
     fun loading(boolean: Boolean) {
 
         if (boolean) {
+            sweetAlertDialog.create()
             if (!sweetAlertDialog.isShowing){
                 sweetAlertDialogSuccess.create()
                 sweetAlertDialog.show()

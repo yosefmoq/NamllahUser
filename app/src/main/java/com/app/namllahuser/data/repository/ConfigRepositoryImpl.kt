@@ -54,7 +54,17 @@ class ConfigRepositoryImpl @Inject constructor(
         )
     }
 
+
     override fun getToken(): String? =ConfigRepositoryObj.getToken(context)
+    override fun setFirebaseToken(token: String) {
+        sharedVariables.setStringSharedVariable(
+            SharedValueFlags.FIREBASE_TOKEN,
+            token
+        )
+
+    }
+
+    override fun getFirebaseToken(): String =ConfigRepositoryObj.getFirebaseToken(context)!!
 
 
 }

@@ -18,6 +18,9 @@ class SplashViewModel @Inject constructor(
     fun isLogin() = configRepository.isLogin()
     fun isSeenOnBoarding() = configRepository.isSeenOnBoarding()
 
+    fun saveToken(token:String) = configRepository.setFirebaseToken(token)
+
+
     companion object {
         private const val TAG = "SplashViewModel"
     }

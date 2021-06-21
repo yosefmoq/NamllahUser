@@ -2,6 +2,7 @@ package com.app.namllahuser.presentation.fragments.wizard.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,10 @@ import com.app.namllahuser.R
 import com.app.namllahuser.databinding.FragmentSplashBinding
 import com.app.namllahuser.presentation.MainActivity
 import com.app.namllahuser.presentation.activities.HomeActivity
+import com.app.namllahuser.presentation.service.MyFirebaseInstanceIDService
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -39,13 +43,43 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.tag(TAG).d("onViewCreated : printInLaunch")
         GlobalScope.launch(context = Dispatchers.Main) {
-            delay(1500)
+/*
+            val tokenSubscriber = object: io.reactivex.Observer<String> {
+                override fun onNext(token: String) {
+
+                    splashViewModel.saveToken(token)
+                    Log.v("ttt","token saved")
+
+                }
+
+                override fun onComplete() {
+                    println("onComplete")
+
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+            }
+
+            MyFirebaseInstanceIDService.getObservable().subscribe(tokenSubscriber)
+*/
+
+            delay(3000)
             moveToNextUI()
         }
 
         GlobalScope.launch(context = Dispatchers.Main) {
             //Do Other Action like check network and initial requests from server
+
+
         }
+
 
     }
 
@@ -70,7 +104,10 @@ class SplashFragment : Fragment() {
 
     }
 
+
+
     companion object {
         private const val TAG = "SplashFragment"
+
     }
 }

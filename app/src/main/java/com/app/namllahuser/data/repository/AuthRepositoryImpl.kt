@@ -6,6 +6,7 @@ import com.app.namllahuser.data.auth.reset_password.ResetPasswordResponse
 import com.app.namllahuser.data.auth.sign_in.SignInResponse
 import com.app.namllahuser.data.auth.sign_up.SignUpResponse
 import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse
+import com.app.namllahuser.data.base.BaseResponse
 import com.app.namllahuser.domain.repository.AuthRepository
 import io.reactivex.Maybe
 import javax.inject.Inject
@@ -37,6 +38,10 @@ class AuthRepositoryImpl @Inject constructor(
         phoneNumber: String,
         password: String,
         code: Int
-    ): Maybe<ResetPasswordResponse> =
+    ): Maybe<VerificationCodeResponse> =
         authApiImpl.resetPassword(phoneNumber, password, code)
+
+    override fun checkResetPassword(mobile: String, code: String): Maybe<BaseResponse> = authApiImpl.checkResetPassword(
+        mobile, code
+    )
 }

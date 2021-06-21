@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.app.namllahuser.R
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment : Fragment() {
     var prevMenuItem: MenuItem? = null
-
+    val mainFragmentVM:MainFragmentVM by viewModels()
     var fragmentsList = mutableListOf<Fragment>()
     lateinit var bottomNavigationAdapter: BottomNavigationAdapter
     lateinit var fragmentMainBinding: FragmentMainBinding
@@ -106,10 +107,11 @@ class MainFragment : Fragment() {
             when (menuItem.getItemId()) {
                 R.id.navHome -> fragmentMainBinding.vp2.setCurrentItem(0)
                 R.id.navOrders -> fragmentMainBinding.vp2.setCurrentItem(1)
-                R.id.navNotification ->fragmentMainBinding.vp2.setCurrentItem(2)
+                R.id.navNotification ->{fragmentMainBinding.vp2.setCurrentItem(2)
+                    mainFragmentVM.markAllAsRead()}
                 R.id.navProfile -> fragmentMainBinding.vp2.setCurrentItem(3)
             }
-            false
+            true
         })
 
 

@@ -21,6 +21,8 @@ object ConfigRepositoryObj {
 
 
     fun getToken(context: Context):String? = SharedVariables(context).getStringSharedVariable(SharedValueFlags.TOKEN,"")
+
+    fun getFirebaseToken(context: Context):String? = SharedVariables(context).getStringSharedVariable(SharedValueFlags.FIREBASE_TOKEN,"")
     fun clear(context: Context){
         SharedVariables(context).clearAllData()
     }

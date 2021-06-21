@@ -2,5 +2,5 @@ package com.app.namllahuser.data.auth.reset_password
 
 data class ResetPasswordResponse(
     val status: Boolean,
-    val error: String
+    val msg: String
 )

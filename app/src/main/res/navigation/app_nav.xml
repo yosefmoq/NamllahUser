@@ -86,6 +86,7 @@
         android:label="fragment_reset_password"
         tools:layout="@layout/fragment_reset_password">
         <argument android:name="phoneNumber" app:argType="string"/>
+        <argument android:name="code" app:argType="integer"/>
 
     </fragment>
     <action

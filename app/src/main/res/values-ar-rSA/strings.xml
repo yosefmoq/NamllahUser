@@ -55,6 +55,10 @@
     <string name="order_completed">مكتملة</string>
     <string name="take_image">يحتاج هذا التطبيق للوصول الى صلاحية التخزين لإمكانية استيراد الصور</string>
     <string name="update_profile">تم تحديث البروفايل بنجاح</string>
+    <string name="trackOrder">تتبع طلبك</string>
+    <string name="contactWithProvider">تواصل مع الفني</string>
+    <string name="cancelOrder">إلغاء الطلب</string>
+    <string name="loading">تحميل</string>
 
 
 </resources>

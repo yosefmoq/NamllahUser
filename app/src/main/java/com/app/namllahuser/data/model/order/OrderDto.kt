@@ -1,6 +1,7 @@
 package com.app.namllahuser.data.model.order
 
 import com.app.namllahuser.data.model.ServiceDto
+import java.io.Serializable
 
 
 data class OrderDto(
@@ -34,5 +35,5 @@ data class OrderDto(
     var lng:Double,
 //    var bills:MutableList<String>
 
-) {
+):Serializable {
 }

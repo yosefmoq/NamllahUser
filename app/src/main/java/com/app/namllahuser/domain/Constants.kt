@@ -6,4 +6,7 @@ object Constants {
     const val RESEND_TYPE_NORMAL = 1;
     const val RESEND_TYPE_VARIFY = 2;
     const val RESEND_TYPE_FORGET_PASS = 3;
+
+    const val COLLECTION_USER = "Users"
+
 }

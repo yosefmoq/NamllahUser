@@ -5,5 +5,6 @@ enum class SharedValueFlags {
     IS_SEEN_ON_BOARDING,
     USER,
     LANGUAGE,
-    TOKEN
+    TOKEN,
+    FIREBASE_TOKEN
 }

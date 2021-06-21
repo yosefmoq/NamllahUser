@@ -55,7 +55,7 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
 
             fragmentVerificationCodeBinding?.tvPhoneNumber?.text = phoneNumber
         }
-        if (type == Constants.RESEND_TYPE_NORMAL)
+        if (type == Constants.RESEND_TYPE_NORMAL || type == Constants.RESEND_TYPE_FORGET_PASS)
             countDown()
 
         if (type == Constants.RESEND_TYPE_VARIFY)
@@ -102,10 +102,27 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
                 verificationCodeViewModel.verificationCodeLiveData.postValue(null)
             }
         })
+        verificationCodeViewModel.checkPassword.observe(viewLifecycleOwner, Observer {
+            it?.let {
+
+                if (it.status!!) {
+                    findNavController().navigate(
+                        VerificationCodeFragmentDirections.actionVerificationCodeFragmentToResetPasswordFragment(
+                            phoneNumber,
+                            fragmentVerificationCodeBinding!!.pvVerifyOTP.text.toString().toInt()
+                        )
+                    )
+                } else {
+                    dialogUtils.showFailAlert(it.msg!!)
+                }
+                //To Stop Livedata
+                verificationCodeViewModel.verificationCodeLiveData.postValue(null)
+            }
+        })
     }
 
     private fun handleVerifyCodeResponse(verificationCodeResponse: VerificationCodeResponse) {
-        if (verificationCodeResponse.status!!){
+        if (verificationCodeResponse.status!!) {
             if (verificationCodeResponse.userDto != null) {
                 //Success Login
                 //Save User data in SP
@@ -125,7 +142,7 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
 
                 }.start()
             } else {
-                if (verificationCodeResponse.status!!) {
+                if (verificationCodeResponse.status) {
                     //Account already active go to Login Page
                     verificationCodeViewModel.changeDialogLiveData(
                         DialogData(
@@ -143,6 +160,8 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
                     )
                 }
             }
+        } else {
+            dialogUtils.showFailAlert(verificationCodeResponse.msg!!)
         }
 
     }
@@ -181,7 +200,13 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
         val otpCode = fragmentVerificationCodeBinding?.pvVerifyOTP?.text.toString()
         val code = otpCode.toIntOrNull() ?: -1
         if (code != -1)
-            verificationCodeViewModel.verifyOTPCode(phoneNumber = phoneNumber, code = code)
+            if (type == Constants.RESEND_TYPE_FORGET_PASS) {
+                verificationCodeViewModel.checkPassword(phoneNumber, code)
+
+            } else {
+                verificationCodeViewModel.verifyOTPCode(phoneNumber = phoneNumber, code = code)
+
+            }
         else
             verificationCodeViewModel.changeErrorMessage("OTP Code Error")
     }
