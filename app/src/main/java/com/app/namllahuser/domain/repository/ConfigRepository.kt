@@ -1,6 +1,7 @@
 package com.app.namllahuser.domain.repository
 
 import com.app.namllahuser.data.model.Language
+import com.app.namllahuser.data.model.MetadataData
 import com.app.namllahuser.data.model.UserDto
 
 
@@ -29,4 +30,9 @@ interface ConfigRepository {
     fun setFirebaseToken(token:String)
 
     fun getFirebaseToken():String
+
+    fun setMetaData(metadataData: MetadataData)
+
+    fun getMetaData():MetadataData
+
 }

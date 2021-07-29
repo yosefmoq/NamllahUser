@@ -9,17 +9,14 @@ import com.app.namllahuser.R
 import com.app.namllahuser.data.model.ServiceDto
 import com.app.namllahuser.databinding.ItemMainCategoryBinding
 import com.app.namllahuser.presentation.listeners.OnCategoryClickListeners
+import com.squareup.picasso.Picasso
 
 class MainCategoryAdapter(
     val data: MutableList<ServiceDto>,
-    val onCategoryClickListener: OnCategoryClickListeners
+    private val onCategoryClickListener: OnCategoryClickListeners
 ) : RecyclerView.Adapter<MainCategoryAdapter.MyViewHolder>() {
 
-    class MyViewHolder(val itemMainCategoryBinding: ItemMainCategoryBinding) : RecyclerView.ViewHolder(itemMainCategoryBinding.root) {
-        var categoryImage: ImageView = itemView.findViewById(R.id.ivCategoryImage)
-        val categoryTitle: TextView = itemView.findViewById(R.id.tvCategoryText)
-
-    }
+    class MyViewHolder(val itemMainCategoryBinding: ItemMainCategoryBinding) : RecyclerView.ViewHolder(itemMainCategoryBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         MyViewHolder(ItemMainCategoryBinding.inflate(
@@ -36,7 +33,6 @@ class MainCategoryAdapter(
         holder.itemMainCategoryBinding.service = serviceDto
         holder.itemMainCategoryBinding.onCategoryClickListener = onCategoryClickListener
         holder.itemMainCategoryBinding.executePendingBindings()
-//        Picasso.with(context).load(serviceDto.serviceImage.original).into(holder.categoryImage)
 
     }
 

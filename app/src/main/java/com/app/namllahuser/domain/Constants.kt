@@ -8,5 +8,6 @@ object Constants {
     const val RESEND_TYPE_FORGET_PASS = 3;
 
     const val COLLECTION_USER = "Users"
+    const val GPS_REQUEST = 57
 
 }

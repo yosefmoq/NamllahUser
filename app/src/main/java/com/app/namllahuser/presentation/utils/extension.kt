@@ -49,3 +49,11 @@ fun Fragment.getUserDocument(id:String):DocumentReference{
     val firestore = FirebaseFirestore.getInstance()
     return firestore.collection(COLLECTION_USER).document(id)
 }
+
+fun Long.toHours():String{
+    val hours = TimeUnit.MILLISECONDS.toHours(this)
+    val min = TimeUnit.MILLISECONDS.toMinutes(this-(hours*3600000))
+    val hourString = String.format("%02d",hours)
+    val minString = String.format("%02d",min)
+    return "$hourString : $minString"
+}

@@ -16,22 +16,24 @@ class DialogUtils(val activity: Activity) {
     private var sweetAlertDialog: SweetAlertDialog =
         SweetAlertDialog(activity, SweetAlertDialog.PROGRESS_TYPE)
 
-    init {
-        sweetAlertDialog.setCancelable(false)
-        sweetAlertDialog.titleText = (activity.getString(R.string.loading))
-    }
+
+
 
     fun loading(boolean: Boolean) {
 
         if (boolean) {
-            sweetAlertDialog.create()
+            sweetAlertDialog.setCancelable(false)
+            sweetAlertDialog.titleText = (activity.getString(R.string.loading))
+
             if (!sweetAlertDialog.isShowing){
                 sweetAlertDialogSuccess.create()
                 sweetAlertDialog.show()
             }
         } else
-            if (sweetAlertDialog.isShowing)
+            if (sweetAlertDialog.isShowing) {
                 sweetAlertDialog.hide()
+                sweetAlertDialog.dismiss()
+            }
 
     }
 
@@ -75,14 +77,13 @@ class DialogUtils(val activity: Activity) {
     fun showSuccessAlert(msg: String) {
         Alerter.create(activity)
             .setTitle(msg)
-            .setBackgroundColorInt(ContextCompat.getColor(activity, R.color.green_light))
+            .setBackgroundColorInt(ContextCompat.getColor(activity, R.color.primary_color))
             .enableInfiniteDuration(false)
             .setDuration(3000)
             .setTitleAppearance(R.style.AlertTextAppearance_Title)
             .setTextAppearance(R.style.AlertTextAppearance_Text)
             .setContentGravity(Gravity.END)
             .show()
-
     }
 
 }

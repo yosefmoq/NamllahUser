@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -81,11 +84,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun termConditionHandle() {
-
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToTermAndConditionFragment())
     }
 
     private fun privacyPolicyHandle() {
-
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToPrivacyPolicyFragment())
     }
 
     private fun editProfileHandle() {
@@ -94,11 +97,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun contactUsHandle() {
-
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToContactUsFragment())
     }
 
     private fun aboutUsHandle() {
-
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToAboutUsFragment())
     }
 
     override fun onResume() {
@@ -116,6 +119,30 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         SharedVariables(requireContext()).clearAllData()
         requireActivity().finish()
         requireActivity().startActivity(Intent(requireActivity(), MainActivity::class.java))
-
     }
+
+/*
+    fun showLogoutDialog(){
+            val viewGroup: ViewGroup = activity!!.window.findViewById(android.R.id.content)
+            val dialogView: View = LayoutInflater.from(activity).inflate(R.layout.dialog_confirm, viewGroup, false)
+*/
+/*
+            dialogView.findViewById<TextView>(R.id.tvDialogTitle).text = title
+            dialogView.findViewById<TextView>(R.id.tvDialogMessage).text = message
+            dialogView.findViewById<AppCompatButton>(R.id.btnDialog).text = buttonText
+*//*
+
+
+            val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity(),R.style.CustomAlertDialog)
+
+            builder.setView(dialogView)
+
+
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+
+        }
+*/
+
+
 }

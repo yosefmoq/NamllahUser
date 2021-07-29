@@ -1,6 +1,7 @@
 package com.app.namllahuser.data.repository
 
 import android.content.Context
+import com.app.namllahuser.data.model.MetadataData
 import com.app.namllahuser.data.model.UserDto
 import com.app.namllahuser.data.sharedvariables.SharedVariables
 import com.app.namllahuser.domain.SharedValueFlags
@@ -65,6 +66,14 @@ class ConfigRepositoryImpl @Inject constructor(
     }
 
     override fun getFirebaseToken(): String =ConfigRepositoryObj.getFirebaseToken(context)!!
+    override fun setMetaData(metadataData: MetadataData) {
+        sharedVariables.setObjectInSharedVariable(
+            SharedValueFlags.METADATA,
+            metadataData
+        )
+    }
+
+    override fun getMetaData(): MetadataData = ConfigRepositoryObj.getMetaData(context)
 
 
 }

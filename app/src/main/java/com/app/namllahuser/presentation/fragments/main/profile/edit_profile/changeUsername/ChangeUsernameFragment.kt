@@ -70,8 +70,8 @@ class ChangeUsernameFragment : BottomSheetDialogFragment(), View.OnClickListener
     }
 
     private fun onClickSave() {
-        if(fragmentChangeUsernameBinding!!.etCurrentPassword.text.toString().length<8){
-            fragmentChangeUsernameBinding!!.etCurrentPassword.error = "The length must be more than 8"
+        if(fragmentChangeUsernameBinding!!.etCurrentPassword.text.toString().length<3){
+            fragmentChangeUsernameBinding!!.etCurrentPassword.error = "The length must be more than 3"
         }else{
             dismiss()
             onUserNameClick.onClick(fragmentChangeUsernameBinding!!.etCurrentPassword.text.toString())

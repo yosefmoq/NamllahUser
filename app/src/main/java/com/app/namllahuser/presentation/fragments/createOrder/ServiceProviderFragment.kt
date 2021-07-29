@@ -51,6 +51,9 @@ class ServiceProviderFragment : Fragment(), OnServiceProvidersClickListeners {
             fragmentServiceProviderBinding.rvServiceProviders.adapter = serviceProviderAdapter
             fragmentServiceProviderBinding.include11.tvToolbarText.text =
                 getString(R.string.serviceProviders)
+            fragmentServiceProviderBinding.include11.ivToolbarBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 

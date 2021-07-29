@@ -52,6 +52,7 @@
     <string name="order_completed">Completed</string>
     <string name="update_profile">The profile updated successfully</string>
 
+    <string name="email">Email</string>
 
     <string name="our_services">Our services</string>
     <string name="finishOrder">Finish order</string>
@@ -62,6 +63,22 @@
     <string name="take_image">This app needs access to the storage even when you are getting pictures</string>
     <string name="cancelOrder">Cancel The Order</string>
     <string name="loading">Loading</string>
+    <string name="call">Call</string>
+    <string name="message">Message</string>
+    <string name="whatsapp">WhatsApp</string>
+    
+    <string name="orderNumber">Order number:</string>
+    <string name="category">Category:</string>
+    <string name="date">Date:</string>
+    <string name="price_material">Price of fetching materials:</string>
+    <string name="PriceOfMaterials">Price of materials:</string>
+    <string name="timeTaken">Time taken to work:</string>
+    <string name="TotalSummation">Total summation:</string>
+    <string name="bill">Bill</string>
+    <string name="paymentMethod">Payment method</string>
+    <string name="cash">Cash</string>
+    <string name="credit">Credit Card</string>
+    <string name="confirm">Confirm</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="skip">SKIP</string>
@@ -111,6 +128,9 @@
     <string name="my_services">My Services</string>
     <string name="add_new_services">Add New Services</string>
 
+    <string name="hello">Hello,</string>
+    <string name="whatsService">What service are you looking for?</string>
+    <string name="pickUp">Pick up my location</string>
 
     <string name="change_language_title">Change Language</string>
     <string name="change_language_message">Choose New Language</string>

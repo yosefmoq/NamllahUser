@@ -110,7 +110,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
                 signInViewModel.saveUserDataLocal(signInResponse.userDto!!)
                 signInViewModel.saveToken(signInResponse.userDto!!.token)
                 signInViewModel.changeLoginStatus(true)
-                startActivity(HomeActivity.getIntent(requireActivity(),1))
+                startActivity(HomeActivity.getIntent(requireActivity(),1,null))
                 requireActivity().finishAffinity()
             } else {
                 val errorMessage = signInResponse.error ?: signInResponse.msg

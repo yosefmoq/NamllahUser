@@ -72,7 +72,7 @@ class ResetPasswordFragment : Fragment(), View.OnClickListener {
                 forgetPasswordVM.saveToken(it.userDto!!.token)
                 object : CountDownTimer(2000, 1000) {
                     override fun onFinish() {
-                        startActivity(HomeActivity.getIntent(requireActivity(), 1))
+                        startActivity(HomeActivity.getIntent(requireActivity(), 1,null))
                         requireActivity().finishAffinity()
                     }
 

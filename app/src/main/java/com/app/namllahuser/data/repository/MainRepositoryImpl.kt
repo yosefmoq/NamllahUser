@@ -3,11 +3,14 @@ package com.app.namllahuser.data.repository
 import com.app.namllahuser.data.auth.sign_in.SignInResponse
 import com.app.namllahuser.data.base.BaseResponse
 import com.app.namllahuser.data.main.MainApiImpl
+import com.app.namllahuser.data.main.MetadataResponse
 import com.app.namllahuser.data.main.notification.NotificationResponse
+import com.app.namllahuser.data.main.orders.CreateOrderResponse
 import com.app.namllahuser.data.main.orders.OrderResponse
 import com.app.namllahuser.data.main.service.ServiceResponse
 import com.app.namllahuser.data.main.serviceProviders.ServiceProviderResponse
 import com.app.namllahuser.data.main.slider.SliderResponse
+import com.app.namllahuser.data.model.AOrderModel
 import com.app.namllahuser.data.model.CreateOrderRequest
 import com.app.namllahuser.domain.repository.MainRepository
 import io.reactivex.Maybe
@@ -46,12 +49,19 @@ class MainRepositoryImpl @Inject constructor(
     override fun changeImage(image: RequestBody): Maybe<SignInResponse> =
         mainApiImpl.changeImage(image)
 
-    override fun postOrder(createOrderRequest: CreateOrderRequest): Maybe<BaseResponse>  =
+    override fun changeLanguage(code: String): Maybe<SignInResponse> = mainApiImpl.changeLanguage(code)
+
+    override fun postOrder(createOrderRequest: CreateOrderRequest): Maybe<CreateOrderResponse>  =
         mainApiImpl.postOrder(createOrderRequest)
 
     override fun cancelOrder(orderId: Int, reasonId: Int, reasonTitle: String):Maybe<BaseResponse> = mainApiImpl.cancelOrder(orderId,reasonId,reasonTitle)
     override fun updateToken(mobile: String, token: String): Maybe<BaseResponse> = mainApiImpl.saveFirebaseToken(mobile,token)
     override fun readAll(): Maybe<BaseResponse> = mainApiImpl.readAllNotification()
+    override fun contactUs(email: String, message: String):Maybe<BaseResponse> = mainApiImpl.contactUS(email,message)
+    override fun getOrder(id:Int): Maybe<AOrderModel> = mainApiImpl.getOrder(id)
+    override fun payOrder(id: Long, amount: Int): Maybe<BaseResponse> = mainApiImpl.payOrder(id,amount)
+    override fun rateProvider(rate: Int, text: String): Maybe<BaseResponse> = mainApiImpl.rateProvider(rate, text)
+    override fun metadata(): Maybe<MetadataResponse>  = mainApiImpl.metadata()
 
 
 }

@@ -265,6 +265,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline13"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toBottomOf="@+id/textView42" />
@@ -282,5 +283,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/_16sdp" />
+
+    <io.github.yavski.fabspeeddial.FabSpeedDial
+        android:id="@+id/fabSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        app:fabGravity="bottom_end"
+        app:fabMenu="@menu/menu_call"
+        app:fabDrawable="@drawable/ic_phone"
+        app:fabDrawableTint="@color/white"
+        app:fabBackgroundTint="@color/btn_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:miniFabBackgroundTint="@color/primary_color"
+        app:miniFabDrawableTint="@color/white"
+        app:miniFabTitleTextColor="?attr/colorPrimaryDark" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

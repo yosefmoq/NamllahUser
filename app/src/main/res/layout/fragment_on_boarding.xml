@@ -34,23 +34,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_onbording_top" />
+                app:srcCompat="@drawable/ic_icon1_wb" />
 
             <ImageView
                 android:id="@+id/ivOnbordingBottomLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@+id/ivOnbordingTop"
-                app:layout_constraintTop_toBottomOf="@+id/ivOnbordingTop"
-                app:srcCompat="@drawable/ic_onbording_bottom_left" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_icon2_wb" />
 
             <ImageView
                 android:id="@+id/ivOnbordingBottomRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_26sdp"
                 app:layout_constraintStart_toEndOf="@+id/ivOnbordingTop"
                 app:layout_constraintTop_toBottomOf="@+id/ivOnbordingTop"
-                app:srcCompat="@drawable/ic_onbording_bottom_right" />
+                app:srcCompat="@drawable/ic_icon3_wb" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.viewpager.widget.ViewPager

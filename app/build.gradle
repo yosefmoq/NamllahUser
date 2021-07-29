@@ -5,6 +5,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -139,8 +140,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.github.shamalka:Pretty-TimeAgo-android-library:1.1.0'
     implementation 'joda-time:joda-time:2.10.10'
-    implementation 'pub.devrel:easypermissions:2.0.1'
+    implementation 'pub.devrel:easypermissions:3.0.0'
     implementation 'com.github.marlonlom:timeago:4.0.3'
     implementation 'com.arsvechkarev:timerx:2.3.2'
+    implementation 'io.github.yavski:fab-speed-dial:1.0.6'
+    implementation 'com.github.vimalcvs:Material-Smart-Rating:1.0.9'
 
 }

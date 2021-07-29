@@ -51,7 +51,9 @@ class AuthApiImpl @Inject constructor(
     ): Maybe<SignUpResponse> =
         Maybe.create {
             val response = authApi.signUp(
+
                 signUpRequest = SignUpRequest(
+                    name =  userName,
                     phoneNumber = phoneNumber,
                     password = password,
                     language = language

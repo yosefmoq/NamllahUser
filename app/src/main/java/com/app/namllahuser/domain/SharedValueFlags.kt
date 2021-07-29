@@ -6,5 +6,6 @@ enum class SharedValueFlags {
     USER,
     LANGUAGE,
     TOKEN,
-    FIREBASE_TOKEN
+    FIREBASE_TOKEN,
+    METADATA
 }

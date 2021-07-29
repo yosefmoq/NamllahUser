@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import com.app.namllahuser.data.main.MetadataResponse
 import com.app.namllahuser.data.main.service.ServiceResponse
 import com.app.namllahuser.data.main.slider.SliderResponse
 import com.app.namllahuser.domain.repository.AuthRepository
@@ -24,6 +25,7 @@ class HomeFragmentMV @Inject constructor(
 ) : BaseViewModel(application = application) {
     val serviceLiveData = MutableLiveData<ServiceResponse>()
     val slidersLiveData = MutableLiveData<SliderResponse>()
+    val metaDataLiveData = MutableLiveData<MetadataResponse>()
     fun getServices() {
         changeLoadingStatus(true)
         launch {
@@ -78,6 +80,18 @@ class HomeFragmentMV @Inject constructor(
                         Log.v("ttt","savedTokenFail")
                     })
             )
+        }
+    }
+    fun getMetaData(){
+        launch {
+            disposable.add(mainRepository.metadata()
+                .subscribeOn(ioScheduler)
+                .observeOn(ioScheduler)
+                .subscribe({
+                    configRepository.setMetaData(it.data!!)
+                },{
+
+                }))
         }
     }
 }

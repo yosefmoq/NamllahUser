@@ -27,6 +27,15 @@
         <action
             android:id="@+id/action_mainFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_selectPaymentMethod"
+            app:destination="@id/selectPaymentMethod" />
+        <action
+            android:id="@+id/action_mainFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_termAndConditionFragment"
+            app:destination="@id/termAndConditionFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -127,11 +136,42 @@
         android:id="@+id/contactUsFragment"
         android:name="com.app.namllahuser.presentation.fragments.pages.contactus.ContactUsFragment"
         android:label="contact_us_fragment"
-        tools:layout="@layout/contact_us_fragment" />
+        tools:layout="@layout/fragment_contact_us" />
 
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.app.namllahuser.presentation.fragments.pages.setting.SettingsFragment"
         android:label="setting_fragment"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_languageListBottomSheetFragment"
+            app:destination="@id/languageListBottomSheetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectPaymentMethod"
+        android:name="com.app.namllahuser.presentation.fragments.selectPayment.SelectPaymentMethodFragment"
+        android:label="fragment_select_payment_method"
+        tools:layout="@layout/fragment_select_payment_method">
+        <argument android:name="order" app:argType="com.app.namllahuser.data.model.order.OrderDto"/>
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.app.namllahuser.presentation.fragments.pages.privacyPolicy.PrivacyPolicyFragment"
+        android:label="privacy_policy_fragment"
+        tools:layout="@layout/privacy_policy_fragment" />
+    <fragment
+        android:id="@+id/termAndConditionFragment"
+        android:name="com.app.namllahuser.presentation.fragments.pages.termConditions.TermAndConditionFragment"
+        android:label="term_and_condition_fragment"
+        tools:layout="@layout/term_and_condition_fragment" />
+    <dialog
+        android:id="@+id/languageListBottomSheetFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.profile.LanguageListBottomSheetFragment"
+        android:label="LanguageListBottomSheetFragment">
+
+        <argument
+            android:name="currentLanguage"
+            app:argType="integer" />
+    </dialog>
+
 </navigation>

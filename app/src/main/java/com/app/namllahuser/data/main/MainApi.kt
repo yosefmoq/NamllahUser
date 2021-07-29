@@ -1,14 +1,15 @@
 package com.app.namllahuser.data.main
 
 import com.app.namllahuser.data.model.CreateOrderRequest
-import com.app.namllahuser.data.model.ServiceProviderDto
-import com.app.namllahuser.data.model.order.OrderData
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface MainApi {
+
+    @GET("metadata")
+    fun metadata():Call<ResponseBody>
 
     @GET("services")
     fun getService():Call<ResponseBody>
@@ -42,6 +43,10 @@ interface MainApi {
     @POST("user/profile")
     fun changeImage(@Part("image\"; filename=\"pp.png\"")  image:RequestBody):Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("user/profile")
+    fun changeLanguage(@Field("language") language: String): Call<ResponseBody>
+
 
     @POST("customer/orders/store")
     fun postOrder(@Body createOrderRequest: CreateOrderRequest):Call<ResponseBody>
@@ -63,5 +68,20 @@ interface MainApi {
 
     @GET("user/notifications/read-all")
     fun readAll():Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("user/contact-us")
+    fun contactUs(@Field("email") email:String,@Field("message") message:String):Call<ResponseBody>
+
+    @GET("customer/orders/{id}")
+    fun getOrder(@Path("id") id:Int):Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("customer/orders/{id}/pay")
+    fun payOrder(@Path("id") id: Long, @Field("payment_id") amount:Int):Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("customer/orders/{id}/rate")
+    fun rateProvider(@Field("rate") rate:Int,@Field("text") text:String):Call<ResponseBody>
 
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.namllahuser.data.base.BaseResponse
 import com.app.namllahuser.data.main.MainApi
+import com.app.namllahuser.data.main.orders.CreateOrderResponse
 import com.app.namllahuser.data.model.CreateOrderRequest
 import com.app.namllahuser.domain.repository.MainRepository
 import com.app.namllahuser.presentation.base.BaseViewModel
@@ -19,7 +20,7 @@ class FinishOrderViewModel @Inject constructor(
     val mainApi: MainApi,
     val mainRepository: MainRepository
 ) :BaseViewModel(application)  {
-    val postOrder = MutableLiveData<BaseResponse>()
+    val postOrder = MutableLiveData<CreateOrderResponse>()
 
 
     fun postOrder(createOrderRequest: CreateOrderRequest){

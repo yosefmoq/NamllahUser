@@ -1,27 +1,31 @@
 package com.app.namllahuser.presentation.fragments.wizard.verification_code
 
+import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse
 import com.app.namllahuser.R
+import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse
 import com.app.namllahuser.databinding.FragmentVerificationCodeBinding
 import com.app.namllahuser.domain.Constants
 import com.app.namllahuser.presentation.activities.HomeActivity
 import com.app.namllahuser.presentation.base.DialogData
-import com.app.namllahuser.presentation.utils.toTimer
 import com.app.namllahuser.presentation.utils.DialogUtils
+import com.app.namllahuser.presentation.utils.toTimer
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class VerificationCodeFragment : Fragment(), View.OnClickListener {
@@ -49,6 +53,11 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
+        dialogUtils.showSuccessAlert("true")
+        val imm: InputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+
         arguments.let {
             phoneNumber = VerificationCodeFragmentArgs.fromBundle(it!!).phoneNumber
             type = VerificationCodeFragmentArgs.fromBundle(it).type
@@ -122,17 +131,17 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun handleVerifyCodeResponse(verificationCodeResponse: VerificationCodeResponse) {
-        if (verificationCodeResponse.status!!) {
             if (verificationCodeResponse.userDto != null) {
                 //Success Login
                 //Save User data in SP
+
                 verificationCodeViewModel.saveUserDataLocal(verificationCodeResponse.userDto!!)
                 verificationCodeViewModel.changeLoginStatus(true)
                 verificationCodeViewModel.saveToken(verificationCodeResponse.userDto!!.token)
                 dialogUtils.showSuccessAlert(msg = "Success validation")
                 object : CountDownTimer(2000, 1000) {
                     override fun onFinish() {
-                        startActivity(HomeActivity.getIntent(requireActivity(), 1))
+                        startActivity(HomeActivity.getIntent(requireActivity(), 1,null))
                         requireActivity().finishAffinity()
                     }
 
@@ -142,15 +151,6 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
 
                 }.start()
             } else {
-                if (verificationCodeResponse.status) {
-                    //Account already active go to Login Page
-                    verificationCodeViewModel.changeDialogLiveData(
-                        DialogData(
-                            title = "",
-                            message = ""
-                        )
-                    )
-                } else {
                     //OTP Code is error
                     verificationCodeViewModel.changeDialogLiveData(
                         DialogData(
@@ -158,11 +158,8 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
                             message = ""
                         )
                     )
-                }
+
             }
-        } else {
-            dialogUtils.showFailAlert(verificationCodeResponse.msg!!)
-        }
 
     }
 

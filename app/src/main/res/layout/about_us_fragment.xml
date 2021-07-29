@@ -12,15 +12,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvAboutText"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_18sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        android:text="TextView"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include5" />
+        app:layout_constraintTop_toBottomOf="@+id/include5">
+
+        <TextView
+            android:id="@+id/tvAboutText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView dlkf;dflgk ;dfl  dfg df"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include5" />
+
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

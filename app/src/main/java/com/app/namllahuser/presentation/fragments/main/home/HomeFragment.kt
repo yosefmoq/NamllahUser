@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.app.namllahuser.R
 import com.app.namllahuser.data.main.service.ServiceResponse
 import com.app.namllahuser.data.main.slider.SliderResponse
 import com.app.namllahuser.data.model.ServiceDto
@@ -36,14 +38,12 @@ import com.stopwatch.IStopWatch
 import com.stopwatch.StopWatch
 */
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timerx.StopwatchBuilder
+import kotlin.coroutines.CoroutineContext
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), OnCategoryClickListeners {
+class HomeFragment : Fragment(), OnCategoryClickListeners, CoroutineScope {
 
     lateinit var fragmentHomeBinding: FragmentHomeBinding
     private val homeFragmentMV: HomeFragmentMV by viewModels()
@@ -51,7 +51,10 @@ class HomeFragment : Fragment(), OnCategoryClickListeners {
     private lateinit var myDocumentReference: DocumentReference
     private lateinit var mainCategoryAdapter: MainCategoryAdapter
     private var isWorking = false
-    private  var stopwatch: StopwatchBuilder? = null
+    lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+    private var stopwatch: StopwatchBuilder? = null
 //    var stopWatch: IStopWatch = StopWatch.create()
 
     lateinit var dialogUtils: DialogUtils
@@ -69,7 +72,7 @@ class HomeFragment : Fragment(), OnCategoryClickListeners {
 
             /**********/
             dialogUtils = DialogUtils(requireActivity())
-            fragmentHomeBinding.include.name = homeFragmentMV.getName().split(" ").get(0)
+            fragmentHomeBinding.include.name = getString(R.string.hello)+homeFragmentMV.getName().split(" ").get(0)
             fragmentHomeBinding.include.ivHomeSetting.setOnClickListener {
                 findNavController().navigate(MainFragmentDirections.actionMainFragmentToSettingFragment())
 
@@ -84,7 +87,7 @@ class HomeFragment : Fragment(), OnCategoryClickListeners {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         myDocumentReference = this@HomeFragment.getUserDocument(homeFragmentMV.getId())
-
+        job = Job()
         observeData()
 
     }
@@ -101,6 +104,7 @@ class HomeFragment : Fragment(), OnCategoryClickListeners {
         })
         homeFragmentMV.slidersLiveData.observe(viewLifecycleOwner, Observer {
             handleSlider(it)
+            homeFragmentMV.getMetaData()
         })
         myDocumentReference.addSnapshotListener(MetadataChanges.EXCLUDE) { value, error ->
             Log.d(TAG, "observeData: value $value")
@@ -126,14 +130,16 @@ class HomeFragment : Fragment(), OnCategoryClickListeners {
 
     private fun handleChangeDataInMyDocument(value: DocumentSnapshot) {
         val userFirebaseJaveModel = value.toObject(UserFirebaseJaveModel::class.java)
-        Log.v("ttt", userFirebaseJaveModel!!.toString())
-        Log.v("ttt", userFirebaseJaveModel.isIs_working.toString())
-        isWorking = userFirebaseJaveModel.isIs_working
-        if (userFirebaseJaveModel.isIs_working) {
+        if (userFirebaseJaveModel != null) {
 
-            fragmentHomeBinding.tvHomTimer.visibility = View.VISIBLE
-            fragmentHomeBinding.constraintLayout.visibility = View.GONE
-            countUp(userFirebaseJaveModel.duration)
+            job.cancel()
+//        Thread.sleep(1000)
+            isWorking = userFirebaseJaveModel.isIs_working
+            if (userFirebaseJaveModel.isIs_working) {
+
+                fragmentHomeBinding.tvHomTimer.visibility = View.VISIBLE
+//                fragmentHomeBinding.constraintLayout.visibility = View.GONE
+                countUp(userFirebaseJaveModel.duration)
 /*
             stopwatch = TimerBuilder().startTime(userFirebaseJaveModel.duration, TimeUnit.MILLISECONDS)
                     .startFormat("MM:SS")
@@ -143,16 +149,18 @@ class HomeFragment : Fragment(), OnCategoryClickListeners {
             stopwatch!!.start()
 */
 
-        } else {
+            } else {
 /*
             if (stopwatch != null) {
                 stopwatch!!.release()
                 stopwatch!!.stop()
             }
 */
-            fragmentHomeBinding.tvHomTimer.visibility = View.GONE
-            fragmentHomeBinding.constraintLayout.visibility = View.VISIBLE
+                fragmentHomeBinding.tvHomTimer.visibility = View.GONE
+//                fragmentHomeBinding.constraintLayout.visibility = View.VISIBLE
+            }
         }
+
     }
 
     private fun handleSlider(it: SliderResponse?) {
@@ -166,7 +174,6 @@ class HomeFragment : Fragment(), OnCategoryClickListeners {
         fragmentHomeBinding.imageSlider.setScrollTimeInSec(4); //set scroll delay in seconds :
         fragmentHomeBinding.imageSlider.startAutoCycle();
 
-
         sliderAdapterExample.renewItems(it!!.data)
 
     }
@@ -178,16 +185,21 @@ class HomeFragment : Fragment(), OnCategoryClickListeners {
     companion object {
         private const val TAG = "HomeFragment"
     }
-    fun countUp(time:Long){
-        CoroutineScope(Dispatchers.Main).launch {
+
+    fun countUp(time: Long) {
+        job = Job()
+        launch {
             var timeAsLong = time
-            while (isWorking){
+            while (isWorking) {
+                if (!isWorking)
+                    break
                 delay(1000)
-                timeAsLong+=1000.toLong()
+                timeAsLong += 1000.toLong()
                 fragmentHomeBinding.tvHomTimer.text = timeAsLong.toCountUp()
-                Log.v("ttt",timeAsLong.toCountUp())
+                Log.v("ttt", timeAsLong.toCountUp())
             }
-        }
+        }.start()
+
     }
 
     override fun onCategoryClick(serviceDto: ServiceDto) {

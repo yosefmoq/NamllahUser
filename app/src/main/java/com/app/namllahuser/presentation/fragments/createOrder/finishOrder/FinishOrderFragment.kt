@@ -73,7 +73,7 @@ class FinishOrderFragment : Fragment(),View.OnClickListener {
         viewModel.postOrder.observe(viewLifecycleOwner, Observer {
             if(it.status!!){
                 requireActivity().finish()
-                requireActivity().startActivity(HomeActivity.getIntent(requireActivity(),2))
+                requireActivity().startActivity(HomeActivity.getIntent(requireActivity(),2,it.data))
             }else{
                 dialogUtils.showFailAlert(it.msg!!)
             }

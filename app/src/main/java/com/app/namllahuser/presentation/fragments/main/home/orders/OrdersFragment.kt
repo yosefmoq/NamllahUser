@@ -1,6 +1,7 @@
 package com.app.namllahuser.presentation.fragments.main.home.orders
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OrdersFragment : Fragment(), OnOrderClickListener {
 
-    private lateinit var orderFragmentBinding: OrdersFragmentBinding
-    private val ordersViewModel: OrdersViewModel by viewModels()
+     lateinit var orderFragmentBinding: OrdersFragmentBinding
+    private  val  ordersViewModel: OrdersViewModel by viewModels()
     private lateinit var dialogUtils: DialogUtils
     private lateinit var ordersAdapter: OrdersAdapter
     private val ordersData: MutableList<OrderDto> = mutableListOf();
@@ -31,7 +32,7 @@ class OrdersFragment : Fragment(), OnOrderClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         orderFragmentBinding = OrdersFragmentBinding.inflate(inflater, container, false)
 
         return orderFragmentBinding.root.apply {
@@ -42,6 +43,7 @@ class OrdersFragment : Fragment(), OnOrderClickListener {
             orderFragmentBinding.rvOrders.adapter = ordersAdapter
             orderFragmentBinding.rvOrders.layoutManager = LinearLayoutManager(requireContext())
             ordersViewModel.getOrders()
+
         }
     }
 
@@ -68,16 +70,23 @@ class OrdersFragment : Fragment(), OnOrderClickListener {
     }
 
     override fun onOrderClick(orderDto: OrderDto) {
-        Toast.makeText(requireContext(), orderDto.cancel_reason_id.toString(), Toast.LENGTH_SHORT)
-            .show()
         when (orderDto.status.id) {
-            1,2,3,4,5,6,7 -> {
-                findNavController().navigate(MainFragmentDirections.actionMainFragmentToOrderStatusFragment(orderDto.status.id.toInt(),orderDto))
+            1,2,3,4,5,6 -> {
+                findNavController().navigate(MainFragmentDirections.actionMainFragmentToOrderStatusFragment(orderDto.status.id,orderDto))
+            }
+            7->{
+                findNavController().navigate(MainFragmentDirections.actionMainFragmentToSelectPaymentMethod(orderDto))
             }
             8->{
 
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.v("ttt","On Resume")
+
     }
 
 }
