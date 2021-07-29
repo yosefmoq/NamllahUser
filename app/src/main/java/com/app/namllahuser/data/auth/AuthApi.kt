@@ -8,6 +8,8 @@ import com.app.namllahuser.data.auth.verification_code.VerificationCodeRequest
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface AuthApi {
@@ -42,9 +44,16 @@ interface AuthApi {
         @Body forgetPasswordRequest: ForgetPasswordRequest
     ): Call<ResponseBody>
 
-    @POST("auth/forget-password")
+    @POST("auth/reset-password")
     fun resetPassword(
 //        @Header("Authorization") token: String,
         @Body resetPasswordRequest: ResetPasswordRequest
     ): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("auth/check-reset-password")
+    fun checkResetPassword(
+        @Field("mobile") mobile:String,
+        @Field("code") code:String
+    ):Call<ResponseBody>
 }

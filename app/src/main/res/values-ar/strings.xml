@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NamllahUser</string>
+    <string name="skip">تخطي</string>
+    <string name="next">التالي</string>
+    <string name="get_started">إبدا</string>
+    <string name="contact_with_the_customer">تواصل مع العميل</string>
+    <string name="contact_the_customer_and_inform_him_about_your_services">تواصل مع العميل وأبلغه بخدماتك.</string>
+    <string name="get_a_return">احصل على عائد</string>
+    <string name="you_can_get_paid_for_the_tasks_you_do">يمكنك الحصول على أموال مقابل المهام التي تقوم بها.</string>
+    <string name="find_your_work">ابحث عن عملك</string>
+    <string name="we_provide_you_the_best_service_providers_and_technicians">نقدم لكم أفضل مزودي الخدمة والفنيين.</string>
+    <string name="login_to_your_account">تسجيل الدخول إلى حسابك</string>
+    <string name="order_details">تفاصيل الطلب</string>
+    <string name="verification_code">رمز التأكيد</string>
+    <string name="forget_password">هل نسيت كلمة السر</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="password">كلمه المرور</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="accept_the_terms_amp_conditions">اقبل الشروط والأحكام</string>
+    <string name="sign_up">إنشاء حساب</string>
+    <string name="or">أو</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="already_have_account">لديك حساب بالفعل؟</string>
+    <string name="user_forget_password">هل نسيت كلمة السر؟</string>
+    <string name="new_user">مستخدم جديد؟</string>
+    <string name="sign_in_with">تسجيل الدخول ب</string>
+    <string name="verify">تحقق</string>
+    <string name="otp_message">الرجاء إدخال رمز التحقق الرقمي الذي تم إرساله إلى الرقم:</string>
+    <string name="otp_hint">****</string>
+    <string name="not_received">لم تستلم رمز تحقق؟</string>
+    <string name="fake_mobile_number">(+970) 599 123 456</string>
+    <string name="enter_your_phone_number_to_reset_the_password_and_then_click_send">أدخل رقم هاتفك لإعادة تعيين كلمة المرور ثم انقر فوق إرسال.</string>
+    <string name="new_password">كلمة السر الجديدة</string>
+    <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
+    <string name="reset_password">إعادة تعيين كلمة المرور</string>
+    <string name="order_photo">طلب صورة</string>
+    <string name="see_more">المزيد</string>
+    <string name="problem_description">وصف المشكلة</string>
+    <string name="location_details">تفاصيل الموقع</string>
+    <string name="lorem_text">أدخل رقم هاتفك لإعادة تعيين كلمة المرور ثم انقر فوق إرسال. أدخل رقم هاتفك لإعادة تعيين كلمة المرور ثم انقر فوق إرسال. أدخل رقم هاتفك لإعادة تعيين كلمة المرور ثم انقر فوق إرسال. أدخل رقم هاتفك لإعادة تعيين كلمة المرور ثم انقر فوق إرسال. أدخل رقم هاتفك لإعادة تعيين كلمة المرور ثم انقر فوق إرسال.</string>
+    <string name="accept">قبول</string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="fake_address">غزة ، فلسطين</string>
+    <string name="fake_name">إسماعيل العمصي</string>
+    <string name="fake_nationality">فلسطيني</string>
+    <string name="my_services">خدماتي</string>
+    <string name="add_new_services">أضف خدمات جديدة</string>
+
+
+    <string name="our_services">خدماتنا</string>
+    <string name="home">الرئيسية</string>
+    <string name="orders">الطلبات</string>
+    <string name="notifications">الإشعارات</string>
+    <string name="profile">البروفايل</string>
+    <string name="editProfile">تعديل البروفايل</string>
+    <string name="accountCharging">شحن الحساب</string>
+    <string name="aboutUs">من نحن</string>
+    <string name="contactUs">تواصل معنا</string>
+    <string name="term">البنود والسياسات</string>
+    <string name="privacy">سياسة الخصوصية</string>
+    <string name="signOut">تسجيل الخروج</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="yourMessage">رسالتك</string>
+    <string name="resend_it">إعادة ارسال الكود</string>
+    <string name="send_code">ارسال الكود</string>
+    <string name="send">ارسال</string>
+    <string name="language">اللغة</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="settings">الإعدادات</string>
+    <string name="address">العنوان</string>
+    <string name="nationality">الجنسية</string>
+    <string name="notification">الإشعارات</string>
+    <string name="change_phone_number_title">تغيير رقم الجوال</string>
+    <string name="change_phone_number_message">سنقوم بارسال رمز تأكيد لرقم هاتفك الجديد</string>
+
+    <string name="change_username_title">تغيير إسم المستخدم</string>
+    <string name="change_username_message">إدخال اسم جديد</string>
+    <string name="finishOrder">إنهاء الطلب</string>
+    <string name="serviceProviders">مزودي الخدمة</string>
+
+    <string name="change_password_title">تغيير كلمة المرور</string>
+    <string name="change_password_message">إدخال كلمة مرور جديدة</string>
+    <string name="order_category">التصنيف:</string>
+    <string name="order_price">السعر:</string>
+    <string name="order_status">الحالة:</string>
+    <string name="order_reason">السبب:</string>
+    <string name="confirm_location">تأكيد العنوان</string>
+    <string name="provider_name">إسم مقدم الخدمة:</string>
+    <string name="my_number">رقم هاتفي:</string>
+    <string name="finish_and_order">إنهاء وتقديم</string>
+    <string name="select">إختيار</string>
+    <string name="successfully_send">تم إضافة طلبك بنجاح</string>
+
+
+    <string name="order_canceled">ملغاه</string>
+    <string name="order_waiting">قيد الإنتظار</string>
+    <string name="order_completed">مكتملة</string>
+    <string name="take_image">يحتاج هذا التطبيق للوصول الى صلاحية التخزين لإمكانية استيراد الصور</string>
+    <string name="update_profile">تم تحديث البروفايل بنجاح</string>
+    <string name="trackOrder">تتبع طلبك</string>
+    <string name="contactWithProvider">تواصل مع الفني</string>
+    <string name="cancelOrder">إلغاء الطلب</string>
+    <string name="loading">تحميل</string>
+    <string name="email">الإيميل</string>
+    <string name="call">إتصال</string>
+    <string name="message">رسالة</string>
+    <string name="whatsapp">واتساب</string>
+
+    <string name="orderNumber">رقم الطلب:</string>
+    <string name="category">الفئة:</string>
+    <string name="date">التاريخ:</string>
+    <string name="price_material">سعر التوصيل للأدوات:</string>
+    <string name="PriceOfMaterials">سعر الأدوات:</string>
+    <string name="timeTaken">وقت العمل</string>
+    <string name="TotalSummation">المجموع الكلي:</string>
+    <string name="bill">الفاتورة</string>
+    <string name="paymentMethod">وسيلة الدفع</string>
+    <string name="cash">نقدا</string>
+    <string name="credit">البطاقة الإئتمانية</string>
+    <string name="confirm">تأكيد</string>
+    <string name="hello">مرحبا,</string>
+    <string name="whatsService">ما هي الخدمة التي تبحث عنها؟</string>
+    <string name="pickUp">إختيار موقعي </string>
+
+
+</resources>

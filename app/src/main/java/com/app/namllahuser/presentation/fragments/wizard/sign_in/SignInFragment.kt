@@ -1,25 +1,33 @@
 package com.app.namllahuser.presentation.fragments.wizard.sign_in
 
+import android.database.Cursor
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.app.namllahuser.R
 import com.app.namllahuser.data.auth.sign_in.SignInResponse
 import com.app.namllahuser.databinding.FragmentSignInBinding
+import com.app.namllahuser.domain.Constants.RESEND_TYPE_VARIFY
+import com.app.namllahuser.presentation.activities.HomeActivity
+import com.app.namllahuser.presentation.service.MyFirebaseInstanceIDService
+import com.app.namllahuser.presentation.utils.DialogUtils
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+
 
 @AndroidEntryPoint
 class SignInFragment : Fragment(), View.OnClickListener {
-
+    lateinit var dialogUtils:DialogUtils
     private val signInViewModel: SignInViewModel by viewModels()
     private var fragmentSignInBinding: FragmentSignInBinding? = null
 
@@ -31,6 +39,12 @@ class SignInFragment : Fragment(), View.OnClickListener {
         fragmentSignInBinding = FragmentSignInBinding.inflate(inflater, container, false)
         return fragmentSignInBinding?.apply {
             actionOnClick = this@SignInFragment
+            dialogUtils =DialogUtils(requireActivity())
+            MyFirebaseInstanceIDService.getObservable().map {
+                Log.v("ttt",it)
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+
         }?.root
     }
 
@@ -71,35 +85,50 @@ class SignInFragment : Fragment(), View.OnClickListener {
     }
 
     private fun observeLiveData() {
-        signInViewModel.loadingLiveData.observe(viewLifecycleOwner, {
-            Timber.tag(TAG).d("observeLiveData : Loading Status $it")
+
+        signInViewModel.loadingLiveData.observe(requireActivity(),Observer{
+            dialogUtils.loading(it)
         })
 
-        signInViewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Timber.tag(TAG).e("observeLiveData : Error Message ${it.message}")
-            it.printStackTrace()
-        }
+        signInViewModel.errorLiveData.observe(viewLifecycleOwner , Observer{
+                dialogUtils.showFailAlert(it)
 
-        signInViewModel.signInLiveData.observe(viewLifecycleOwner, {
+        })
+
+        signInViewModel.signInLiveData.observe(viewLifecycleOwner, Observer{
             it?.let {
                 handleSignInResponse(it)
                 //To Stop Livedata
-                signInViewModel.signInLiveData.postValue(null)
+//                signInViewModel.signInLiveData.postValue(null)
             }
         })
     }
 
     private fun handleSignInResponse(signInResponse: SignInResponse) {
-        if (signInResponse.userDto != null) {
-            //Success Login
-            //Save User data in SP
-            signInViewModel.saveUserDataLocal(signInResponse.userDto!!)
-            signInViewModel.changeLoginStatus(true)
-            findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
-        } else {
-            val errorMessage = signInResponse.error ?: signInResponse.message
-            ?: "Something error, Please try again later"
-            signInViewModel.changeErrorMessage(Throwable(errorMessage))
+        if(signInResponse.status!!){
+            if (signInResponse.userDto != null) {
+                signInViewModel.saveUserDataLocal(signInResponse.userDto!!)
+                signInViewModel.saveToken(signInResponse.userDto!!.token)
+                signInViewModel.changeLoginStatus(true)
+                startActivity(HomeActivity.getIntent(requireActivity(),1,null))
+                requireActivity().finishAffinity()
+            } else {
+                val errorMessage = signInResponse.error ?: signInResponse.msg
+                ?: "Something error, Please try again later"
+                Log.v("ttt",errorMessage)
+                signInViewModel.changeErrorMessage(errorMessage)
+            }
+        }else{
+
+            if(signInResponse.error == "auth.not_verified"){
+                Log.d(TAG, "handleSignInResponse: auth ${signInResponse.error}")
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToVerificationCodeFragment(phoneNumber = fragmentSignInBinding!!.etPhoneNumber.text.toString(),type = RESEND_TYPE_VARIFY  ))
+                fragmentSignInBinding!!.etPhoneNumber.setText("")
+                fragmentSignInBinding!!.etPassword.setText("")
+
+            }else{
+                dialogUtils.showFailAlert(signInResponse.error!!)
+            }
         }
     }
 
@@ -133,6 +162,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
             return
         }
         //Show Loading Dialog
+        Log.v("ttt","signin")
         signInViewModel.signInRequest(phoneNumber, password)
     }
 
@@ -147,4 +177,5 @@ class SignInFragment : Fragment(), View.OnClickListener {
     companion object {
         private const val TAG = "SignInFragment"
     }
+
 }

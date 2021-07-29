@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.MainFragment"
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_selectLocationFragment"
+            app:destination="@id/selectLocationFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_aboutUsFragment"
+            app:destination="@id/aboutUsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_contactUsFragment"
+            app:destination="@id/contactUsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_orderStatusFragment"
+            app:destination="@id/orderStatusFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_selectPaymentMethod"
+            app:destination="@id/selectPaymentMethod" />
+        <action
+            android:id="@+id/action_mainFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_termAndConditionFragment"
+            app:destination="@id/termAndConditionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.edit_profile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile">
+        <action
+            android:id="@+id/action_editProfileFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_changeUsernameFragment"
+            app:destination="@id/changeUsernameFragment" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_changePhonenumberFragment"
+            app:destination="@id/changePhonenumberFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/changePasswordFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.edit_profile.changePassword.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" >
+        <argument android:name="passwordObject"
+            app:argType="com.app.namllahuser.data.model.PasswordBottomSheetData"/>
+    </dialog>
+    <dialog
+        android:id="@+id/changeUsernameFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.edit_profile.changeUsername.ChangeUsernameFragment"
+        android:label="ChangeUsernameFragment">
+        <argument
+            android:name="username"
+            app:argType="com.app.namllahuser.data.model.UsernameBottomSheetData" />
+    </dialog>
+    <dialog
+        android:id="@+id/changePhonenumberFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.edit_profile.changePhone.ChangePhoneNumberFragment"
+        android:label="ChangePhonenumberFragment">
+        <argument
+            android:name="phoneNumber"
+            app:argType="com.app.namllahuser.data.model.PhoneBottomSheetData" />
+    </dialog>
+    <fragment
+        android:id="@+id/orderStatusFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.stateOrder.OrderStatusFragment"
+        android:label="fragment_order_status"
+        tools:layout="@layout/fragment_order_status" >
+        <argument android:name="status" app:argType="integer"/>
+        <argument android:name="orderDto" app:argType="com.app.namllahuser.data.model.order.OrderDto"/>
+    </fragment>
+    <fragment
+        android:id="@+id/testShimmer"
+        android:name="com.app.namllahuser.TestShimmer"
+        android:label="fragment_test_shimmer"
+        tools:layout="@layout/fragment_test_shimmer" />
+    <fragment
+        android:id="@+id/selectLocationFragment"
+        android:name="com.app.namllahuser.presentation.fragments.createOrder.SelectLocationFragment"
+        android:label="SelectLocationFragment">
+        <argument
+            android:name="service"
+            app:argType="com.app.namllahuser.data.model.ServiceDto" />
+        <action
+            android:id="@+id/action_selectLocationFragment_to_serviceProviderFragment"
+            app:destination="@id/serviceProviderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serviceProviderFragment"
+        android:name="com.app.namllahuser.presentation.fragments.createOrder.ServiceProviderFragment"
+        android:label="fragment_service_provider"
+        tools:layout="@layout/fragment_service_provider">
+        <argument
+            android:name="service"
+            app:argType="com.app.namllahuser.data.model.ServiceDto" />
+        <argument
+            android:name="lat"
+            app:argType="string" />
+        <argument
+            android:name="lng"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_serviceProviderFragment_to_finishOrderFragment"
+            app:destination="@id/finishOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finishOrderFragment"
+        android:name="com.app.namllahuser.presentation.fragments.createOrder.finishOrder.FinishOrderFragment"
+        android:label="FinishOrderFragment">
+        <argument
+            android:name="finishOrderRequest"
+            app:argType="com.app.namllahuser.data.model.CreateOrderRequest" />
+        <action
+            android:id="@+id/action_finishOrderFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.app.namllahuser.presentation.fragments.pages.aboutus.AboutUsFragment"
+        android:label="AboutUsFragment" />
+    <fragment
+        android:id="@+id/contactUsFragment"
+        android:name="com.app.namllahuser.presentation.fragments.pages.contactus.ContactUsFragment"
+        android:label="contact_us_fragment"
+        tools:layout="@layout/fragment_contact_us" />
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.app.namllahuser.presentation.fragments.pages.setting.SettingsFragment"
+        android:label="setting_fragment"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_languageListBottomSheetFragment"
+            app:destination="@id/languageListBottomSheetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectPaymentMethod"
+        android:name="com.app.namllahuser.presentation.fragments.selectPayment.SelectPaymentMethodFragment"
+        android:label="fragment_select_payment_method"
+        tools:layout="@layout/fragment_select_payment_method">
+        <argument android:name="order" app:argType="com.app.namllahuser.data.model.order.OrderDto"/>
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.app.namllahuser.presentation.fragments.pages.privacyPolicy.PrivacyPolicyFragment"
+        android:label="privacy_policy_fragment"
+        tools:layout="@layout/privacy_policy_fragment" />
+    <fragment
+        android:id="@+id/termAndConditionFragment"
+        android:name="com.app.namllahuser.presentation.fragments.pages.termConditions.TermAndConditionFragment"
+        android:label="term_and_condition_fragment"
+        tools:layout="@layout/term_and_condition_fragment" />
+    <dialog
+        android:id="@+id/languageListBottomSheetFragment"
+        android:name="com.app.namllahuser.presentation.fragments.main.profile.profile.LanguageListBottomSheetFragment"
+        android:label="LanguageListBottomSheetFragment">
+
+        <argument
+            android:name="currentLanguage"
+            app:argType="integer" />
+    </dialog>
+
+</navigation>

@@ -15,16 +15,33 @@
 
     <color name="primary_color">#0080C6</color>
     <color name="primary_color_dark">#005F93</color>
-    <color name="accent_color">#fb9335</color>
+    <color name="accent_color">#0080C6</color>
     <color name="gray_color">#ababab</color>
     <color name="button_color">#FAA74A</color>
     <color name="active_dot_color">#006FBB</color>
     <color name="inactive_dot_color">#F2F2F2</color>
+    <color name="btn_color">#fb9335</color>
+
 
     <color name="colorDanger">#B00020</color>
     <color name="colorSuccess">#409D02</color>
     <color name="colorDisable">#DCDCDC</color>
     <color name="colorWarning">#F0AD4E</color>
     <color name="colorInfo">#5BC0DE</color>
+    <color name="colorRed">#EF0606</color>
+    <color name="green_light">#33ce48</color>
+    <color name="red">#f55252</color>
+
+    <color name="view_unselected">#E6E6E6</color>
+    <color name="view_selected">#0080C6</color>
+
+    <integer-array name="fab_menu_item_colors">
+        <!-- A dark Holo shade of red -->
+        <item>@color/primary_color</item>
+        <!-- A Holo shade of purple -->
+        <item>@android:color/holo_purple</item>
+        <!-- A light Holo shade of green -->
+        <item>@android:color/holo_green_light</item>
+    </integer-array>
 
 </resources>

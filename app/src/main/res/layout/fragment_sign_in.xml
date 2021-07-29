@@ -69,7 +69,7 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:onClick="@{(view)->actionOnClick.onClick(view)}"
             android:text="@string/user_forget_password"
-            android:textColor="@color/accent_color"
+            android:textColor="@color/btn_color"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="@+id/til_password"
             app:layout_constraintTop_toBottomOf="@+id/til_password" />
@@ -181,7 +181,7 @@
                 android:layout_marginHorizontal="@dimen/_4sdp"
                 android:onClick="@{(view)->actionOnClick.onClick(view)}"
                 android:text="@string/sign_up"
-                android:textColor="@color/accent_color"
+                android:textColor="@color/btn_color"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>
 

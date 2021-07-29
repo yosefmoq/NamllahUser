@@ -1,28 +1,41 @@
 package com.app.namllahuser.presentation.fragments.wizard.verification_code
 
+import android.content.Context
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse
 import com.app.namllahuser.R
+import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse
 import com.app.namllahuser.databinding.FragmentVerificationCodeBinding
+import com.app.namllahuser.domain.Constants
+import com.app.namllahuser.presentation.activities.HomeActivity
 import com.app.namllahuser.presentation.base.DialogData
+import com.app.namllahuser.presentation.utils.DialogUtils
+import com.app.namllahuser.presentation.utils.toTimer
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+
 @AndroidEntryPoint
 class VerificationCodeFragment : Fragment(), View.OnClickListener {
-
+    lateinit var dialogUtils: DialogUtils
     private val verificationCodeViewModel: VerificationCodeViewModel by viewModels()
 
     private var fragmentVerificationCodeBinding: FragmentVerificationCodeBinding? = null
     private var phoneNumber = ""
+    private var type = 1
+    private var timer: Long = 180000;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,36 +46,84 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
             FragmentVerificationCodeBinding.inflate(inflater, container, false)
         return fragmentVerificationCodeBinding?.apply {
             actionOnClick = this@VerificationCodeFragment
+            dialogUtils = DialogUtils(requireActivity())
         }?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
+        dialogUtils.showSuccessAlert("true")
+        val imm: InputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+
         arguments.let {
             phoneNumber = VerificationCodeFragmentArgs.fromBundle(it!!).phoneNumber
+            type = VerificationCodeFragmentArgs.fromBundle(it).type
+
             fragmentVerificationCodeBinding?.tvPhoneNumber?.text = phoneNumber
         }
+        if (type == Constants.RESEND_TYPE_NORMAL || type == Constants.RESEND_TYPE_FORGET_PASS)
+            countDown()
+
+        if (type == Constants.RESEND_TYPE_VARIFY)
+            verificationCodeViewModel.resendCode(phoneNumber)
+
         observeLiveData()
     }
 
     private fun observeLiveData() {
-        verificationCodeViewModel.loadingLiveData.observe(viewLifecycleOwner, {
+        verificationCodeViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
             Timber.tag(TAG).d("observeLiveData : Loading Status $it")
+            dialogUtils.loading(it)
         })
 
-        verificationCodeViewModel.errorLiveData.observe(viewLifecycleOwner, {
-            Timber.tag(TAG).e("observeLiveData : Error Message ${it.message}")
-            it.printStackTrace()
+        verificationCodeViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
+            Timber.tag(TAG).e("observeLiveData : Error Message ${it}")
+            dialogUtils.showFailAlert(it)
         })
 
-        verificationCodeViewModel.dialogLiveData.observe(viewLifecycleOwner, {
+        verificationCodeViewModel.dialogLiveData.observe(viewLifecycleOwner, Observer {
             Timber.tag(TAG).e("observeLiveData : Error Message $it")
+
         })
 
-        verificationCodeViewModel.verificationCodeLiveData.observe(viewLifecycleOwner, {
+        verificationCodeViewModel.resendCodeLiveData.observe(viewLifecycleOwner, Observer {
+
+            if (it!!.status) {
+                countDown()
+                dialogUtils.showSuccessAlert("تم إرسال الكود بنجاح")
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "الرجاء الإنتظار قليلا قبل الإرسال مرة أخرى",
+                    Toast.LENGTH_SHORT
+                ).show()
+                dialogUtils.showFailAlert(it.msg)
+            }
+        })
+        verificationCodeViewModel.verificationCodeLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
+
                 handleVerifyCodeResponse(it)
+                //To Stop Livedata
+                verificationCodeViewModel.verificationCodeLiveData.postValue(null)
+            }
+        })
+        verificationCodeViewModel.checkPassword.observe(viewLifecycleOwner, Observer {
+            it?.let {
+
+                if (it.status!!) {
+                    findNavController().navigate(
+                        VerificationCodeFragmentDirections.actionVerificationCodeFragmentToResetPasswordFragment(
+                            phoneNumber,
+                            fragmentVerificationCodeBinding!!.pvVerifyOTP.text.toString().toInt()
+                        )
+                    )
+                } else {
+                    dialogUtils.showFailAlert(it.msg!!)
+                }
                 //To Stop Livedata
                 verificationCodeViewModel.verificationCodeLiveData.postValue(null)
             }
@@ -70,21 +131,36 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun handleVerifyCodeResponse(verificationCodeResponse: VerificationCodeResponse) {
-        if (verificationCodeResponse.userDto != null) {
-            //Success Login
-            //Save User data in SP
-            verificationCodeViewModel.saveUserDataLocal(verificationCodeResponse.userDto!!)
-            verificationCodeViewModel.changeLoginStatus(true)
-            findNavController().navigate(VerificationCodeFragmentDirections.actionVerificationCodeFragmentToMainFragment())
-        } else {
-            if (verificationCodeResponse.status!!) {
-                //Account already active go to Login Page
-                verificationCodeViewModel.changeDialogLiveData(DialogData(title = "", message = ""))
+            if (verificationCodeResponse.userDto != null) {
+                //Success Login
+                //Save User data in SP
+
+                verificationCodeViewModel.saveUserDataLocal(verificationCodeResponse.userDto!!)
+                verificationCodeViewModel.changeLoginStatus(true)
+                verificationCodeViewModel.saveToken(verificationCodeResponse.userDto!!.token)
+                dialogUtils.showSuccessAlert(msg = "Success validation")
+                object : CountDownTimer(2000, 1000) {
+                    override fun onFinish() {
+                        startActivity(HomeActivity.getIntent(requireActivity(), 1,null))
+                        requireActivity().finishAffinity()
+                    }
+
+                    override fun onTick(millisUntilFinished: Long) {
+
+                    }
+
+                }.start()
             } else {
-                //OTP Code is error
-                verificationCodeViewModel.changeDialogLiveData(DialogData(title = "", message = ""))
+                    //OTP Code is error
+                    verificationCodeViewModel.changeDialogLiveData(
+                        DialogData(
+                            title = "",
+                            message = ""
+                        )
+                    )
+
             }
-        }
+
     }
 
     private fun initToolbar() {
@@ -121,9 +197,15 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
         val otpCode = fragmentVerificationCodeBinding?.pvVerifyOTP?.text.toString()
         val code = otpCode.toIntOrNull() ?: -1
         if (code != -1)
-            verificationCodeViewModel.verifyOTPCode(phoneNumber = phoneNumber, code = code)
+            if (type == Constants.RESEND_TYPE_FORGET_PASS) {
+                verificationCodeViewModel.checkPassword(phoneNumber, code)
+
+            } else {
+                verificationCodeViewModel.verifyOTPCode(phoneNumber = phoneNumber, code = code)
+
+            }
         else
-            verificationCodeViewModel.changeErrorMessage(Throwable("OTP Code Error"))
+            verificationCodeViewModel.changeErrorMessage("OTP Code Error")
     }
 
     private fun onClickPhoneNumber() {
@@ -131,7 +213,32 @@ class VerificationCodeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun onClickResendOTPCode() {
+        if (timer == 0.toLong()) {
+            verificationCodeViewModel.resendCode(phoneNumber)
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "الرجاء الإنتظار قليلا قبل الإرسال مرة أخرى",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
+    private fun countDown() {
+        Log.v("ttt", "countDown")
+        timer = 180000
+        object : CountDownTimer(180000, 1000) {
+            override fun onFinish() {
+                timer = 0
+                fragmentVerificationCodeBinding!!.tvTimer.setText("00:00")
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                Log.v("ttt", "text")
+                timer -= 1000
+                fragmentVerificationCodeBinding!!.tvTimer.setText(timer.toTimer())
+            }
+        }.start()
     }
 
 }

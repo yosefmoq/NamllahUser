@@ -1,21 +1,37 @@
 package com.app.namllahuser.data.networkhelper
 
+import android.content.Context
+import android.util.Log
+import com.app.namllahuser.data.model.UserDto
 import com.app.namllahuser.data.sharedvariables.SharedVariables
 import com.app.namllahuser.domain.SharedValueFlags
+import com.app.namllahuser.domain.repository.ConfigRepository
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.ResponseBody
 import timber.log.Timber
 import java.util.*
+import javax.inject.Inject
 
-class LoggingInterceptor(var sharedVariables: SharedVariables) : Interceptor {
-
+class LoggingInterceptor @Inject constructor(val  configRepository: ConfigRepository) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
+
         var request = chain.request()
 
-        request = request.newBuilder()
-            .header("Accept", "application/json")
-            .method(request.method, request.body).build()
+        if(configRepository.getLoggedUser()!=null&&configRepository.getToken()!!.isNotEmpty()){
+            request = request.newBuilder()
+                .header("Accept", "application/json")
+                .header("Accept-Language",configRepository.getLang()?:"en")
+                .header("authorization","Bearer "+configRepository.getToken())
+                .method(request.method, request.body).build()
+
+        }else{
+            request = request.newBuilder()
+                .header("Accept", "application/json")
+                .header("Accept-Language",configRepository.getLang()?:"en")
+                .method(request.method, request.body).build()
+
+        }
 
         Timber.tag(TAG).d("intercept: url ${request.url}")
         Timber.tag(TAG).d("intercept: method ${request.method}")

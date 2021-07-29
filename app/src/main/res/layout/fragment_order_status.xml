@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.fragments.main.stateOrder.OrderStatusFragment">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/home_toolbar" />
+
+    <RadioButton
+        android:id="@+id/rb1"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_19sdp"
+        android:background="@drawable/bg_rb_custom"
+        android:button="@android:color/transparent"
+        android:checked="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <View
+        android:id="@+id/vFv"
+        android:layout_width="2dp"
+        android:layout_height="@dimen/_55sdp"
+        android:background="#0080C6"
+        app:layout_constraintEnd_toEndOf="@+id/rb1"
+        app:layout_constraintStart_toStartOf="@+id/rb1"
+        app:layout_constraintTop_toBottomOf="@+id/rb1" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="1"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/rb1"
+        app:layout_constraintEnd_toEndOf="@+id/rb1"
+        app:layout_constraintStart_toStartOf="@+id/rb1"
+        app:layout_constraintTop_toTopOf="@+id/rb1" />
+
+    <RadioButton
+        android:id="@+id/rb2"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:background="@drawable/bg_rb_custom"
+        android:button="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vFv" />
+
+    <TextView
+        android:id="@+id/tvTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="2"
+        android:textColor="#0080C6"
+        app:layout_constraintBottom_toBottomOf="@+id/rb2"
+        app:layout_constraintEnd_toEndOf="@+id/rb2"
+        app:layout_constraintStart_toStartOf="@+id/rb2"
+        app:layout_constraintTop_toBottomOf="@+id/vFv" />
+
+    <View
+        android:id="@+id/vFs"
+        android:layout_width="2dp"
+        android:layout_height="@dimen/_55sdp"
+        android:background="@color/view_unselected"
+        app:layout_constraintEnd_toEndOf="@+id/rb2"
+        app:layout_constraintStart_toStartOf="@+id/rb2"
+        app:layout_constraintTop_toBottomOf="@+id/rb2" />
+
+    <RadioButton
+        android:id="@+id/rb3"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:background="@drawable/bg_rb_custom_gray"
+        android:button="@android:color/transparent"
+        android:checked="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vFs" />
+
+    <TextView
+        android:id="@+id/tvThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="3"
+        android:textColor="@color/view_unselected"
+        app:layout_constraintBottom_toBottomOf="@+id/rb3"
+        app:layout_constraintEnd_toEndOf="@+id/rb3"
+        app:layout_constraintStart_toStartOf="@+id/rb3"
+        app:layout_constraintTop_toBottomOf="@+id/vFs" />
+
+    <View
+        android:id="@+id/vFt"
+        android:layout_width="2dp"
+        android:layout_height="@dimen/_55sdp"
+        android:background="@color/view_unselected"
+        app:layout_constraintEnd_toEndOf="@+id/rb3"
+        app:layout_constraintStart_toStartOf="@+id/rb3"
+        app:layout_constraintTop_toBottomOf="@+id/rb3" />
+
+    <RadioButton
+        android:id="@+id/rb4"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:background="@drawable/bg_rb_custom_gray"
+        android:button="@android:color/transparent"
+        android:checked="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vFt" />
+
+    <TextView
+        android:id="@+id/tvFour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="4"
+        android:textColor="@color/view_unselected"
+        app:layout_constraintBottom_toBottomOf="@+id/rb4"
+        app:layout_constraintEnd_toEndOf="@+id/rb4"
+        app:layout_constraintStart_toStartOf="@+id/rb4"
+        app:layout_constraintTop_toBottomOf="@+id/vFt" />
+
+
+    <RadioButton
+        android:id="@+id/rb5"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:background="@drawable/bg_rb_custom_gray"
+        android:button="@android:color/transparent"
+        android:checked="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vFf" />
+
+    <TextView
+        android:id="@+id/tvFive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="5"
+        android:textColor="@color/view_unselected"
+        app:layout_constraintBottom_toBottomOf="@+id/rb5"
+        app:layout_constraintEnd_toEndOf="@+id/rb5"
+        app:layout_constraintStart_toStartOf="@+id/rb5"
+        app:layout_constraintTop_toTopOf="@+id/rb5" />
+
+    <View
+        android:id="@+id/vFf"
+        android:layout_width="2dp"
+        android:layout_height="@dimen/_55sdp"
+        android:background="@color/view_unselected"
+        app:layout_constraintEnd_toEndOf="@+id/rb4"
+        app:layout_constraintStart_toStartOf="@+id/rb4"
+        app:layout_constraintTop_toBottomOf="@+id/rb4" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:text="Waiting"
+        app:layout_constraintBottom_toBottomOf="@+id/textView29"
+        app:layout_constraintStart_toEndOf="@+id/rb1"
+        app:layout_constraintTop_toTopOf="@+id/rb1" />
+
+    <TextView
+        android:id="@+id/textView35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_light"
+        android:text="Your request is awaiting the provider's\n approval"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintStart_toStartOf="@+id/textView34"
+        app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="6dp"
+        android:text="Approved"
+        app:layout_constraintBottom_toBottomOf="@+id/rb2"
+        app:layout_constraintStart_toStartOf="@+id/textView34"
+        app:layout_constraintTop_toTopOf="@+id/rb2" />
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_light"
+        android:text="Your request has been approved by the\n provider"
+        app:layout_constraintStart_toStartOf="@+id/textView36"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="The provider in the way"
+        app:layout_constraintBottom_toBottomOf="@+id/rb3"
+        app:layout_constraintStart_toStartOf="@+id/textView36"
+        app:layout_constraintTop_toTopOf="@+id/rb3" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="Working"
+        app:layout_constraintBottom_toBottomOf="@+id/rb4"
+        app:layout_constraintStart_toStartOf="@+id/textView38"
+        app:layout_constraintTop_toTopOf="@+id/rb4" />
+
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_light"
+        android:text="Your request is now under implementation by\n the provider"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="Completed"
+        app:layout_constraintBottom_toBottomOf="@+id/rb5"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toTopOf="@+id/rb5" />
+
+    <TextView
+        android:id="@+id/textView42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_light"
+        android:text="The work has now been completed by the\n provider."
+        app:layout_constraintStart_toStartOf="@+id/textView41"
+        app:layout_constraintTop_toBottomOf="@+id/textView41" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnContactWithProvider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/btn_background"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/contactWithProvider"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toBottomOf="@+id/textView42" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/_16sdp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/_16sdp" />
+
+    <io.github.yavski.fabspeeddial.FabSpeedDial
+        android:id="@+id/fabSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        app:fabGravity="bottom_end"
+        app:fabMenu="@menu/menu_call"
+        app:fabDrawable="@drawable/ic_phone"
+        app:fabDrawableTint="@color/white"
+        app:fabBackgroundTint="@color/btn_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:miniFabBackgroundTint="@color/primary_color"
+        app:miniFabDrawableTint="@color/white"
+        app:miniFabTitleTextColor="?attr/colorPrimaryDark" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

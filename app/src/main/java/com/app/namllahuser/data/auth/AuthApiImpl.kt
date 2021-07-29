@@ -10,6 +10,7 @@ import com.app.namllahuser.data.auth.sign_up.SignUpRequest
 import com.app.namllahuser.data.auth.sign_up.SignUpResponse
 import com.app.namllahuser.data.auth.verification_code.VerificationCodeRequest
 import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse
+import com.app.namllahuser.data.base.BaseResponse
 import com.app.namllahuser.domain.repository.ConfigRepository
 import com.google.gson.GsonBuilder
 import io.reactivex.Maybe
@@ -50,7 +51,9 @@ class AuthApiImpl @Inject constructor(
     ): Maybe<SignUpResponse> =
         Maybe.create {
             val response = authApi.signUp(
+
                 signUpRequest = SignUpRequest(
+                    name =  userName,
                     phoneNumber = phoneNumber,
                     password = password,
                     language = language
@@ -134,7 +137,7 @@ class AuthApiImpl @Inject constructor(
         phoneNumber: String,
         password: String,
         code: Int
-    ): Maybe<ResetPasswordResponse> =
+    ): Maybe<VerificationCodeResponse> =
         Maybe.create {
             val response = authApi.resetPassword(
                 resetPasswordRequest = ResetPasswordRequest(
@@ -146,13 +149,25 @@ class AuthApiImpl @Inject constructor(
             if (response.isSuccessful) {
                 val gson = GsonBuilder().create()
                 val str = JSONObject(response.body()!!.string()).toString()
-                val forgetPasswordResponse: ResetPasswordResponse = gson.fromJson(
+                val forgetPasswordResponse: VerificationCodeResponse = gson.fromJson(
                     str,
-                    ResetPasswordResponse::class.java
+                    VerificationCodeResponse::class.java
                 )
                 it.onSuccess(forgetPasswordResponse)
             } else {
                 it.onError(Throwable(response.errorBody()?.string() ?: "Something went wrong!"))
             }
         }
+
+    fun checkResetPassword(mobile:String,code:String):Maybe<BaseResponse> = Maybe.create{
+        val response = authApi.checkResetPassword(mobile,code).execute()
+        if (response.isSuccessful) {
+            val gson = GsonBuilder().create()
+            val str = JSONObject(response.body()!!.string()).toString()
+            val baseResponse: BaseResponse = gson.fromJson(str, BaseResponse::class.java)
+            it.onSuccess(baseResponse)
+        } else {
+            it.onError(Throwable(response.errorBody()?.string() ?: "Something went wrong!"))
+        }
+    }
 }

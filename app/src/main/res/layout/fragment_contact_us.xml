@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.fragments.pages.contactus.ContactUsFragment">
+
+        <include
+            android:id="@+id/include6"
+            layout="@layout/home_toolbar" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etContactEmail"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@drawable/bg_contact_et"
+            android:hint="@string/email"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/include6" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etContactMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_contact_et"
+            android:gravity="top"
+            android:hint="@string/yourMessage"
+            android:inputType="textMultiLine"
+            android:minHeight="@dimen/_175sdp"
+            android:paddingStart="@dimen/_11sdp"
+            android:paddingTop="@dimen/_11sdp"
+            android:paddingEnd="@dimen/_11sdp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/etContactEmail" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContactSend"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_37sdp"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:background="@drawable/btn_background"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:onClick="@{(view)->onClick.onClick(view)}"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/etContactMessage" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_16sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
