@@ -27,7 +27,7 @@ data class OrderDto(
     @SerializedName("check_at")
     var check_at: String,
     @SerializedName("estimated_time")
-    var estimated_time: Int,
+    var estimated_time: Double,
     @SerializedName("estimated_price_parts")
     var estimated_price_parts: Double,
     @SerializedName("estimated_price")
@@ -57,7 +57,7 @@ data class OrderDto(
 
     var cancel_by_me: Int,
     @SerializedName("duration")
-    var duration: String,
+    var duration: Long,
     @SerializedName("is_working")
 
     var is_working: Int,
@@ -110,7 +110,7 @@ data class OrderDto(
         parcel.readParcelable<ServiceDto>(ServiceDto::class.java.classLoader)!!,
         parcel.readParcelable<Area>(Area::class.java.classLoader)!!,
         parcel.readString()!!,
-        parcel.readInt(),
+        parcel.readDouble(),
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readInt(),
@@ -119,7 +119,7 @@ data class OrderDto(
         parcel.readString(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readString()!!,
+        parcel.readLong(),
         parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!,
@@ -141,7 +141,7 @@ data class OrderDto(
         parcel.writeParcelable(service, flags)
         parcel.writeParcelable(area, flags)
         parcel.writeString(check_at)
-        parcel.writeInt(estimated_time)
+        parcel.writeDouble(estimated_time)
         parcel.writeDouble(estimated_price_parts)
         parcel.writeDouble(estimated_price)
         parcel.writeInt(is_pay_complete)
@@ -150,7 +150,7 @@ data class OrderDto(
         parcel.writeString(cancel_at)
         parcel.writeInt(is_cancel)
         parcel.writeInt(cancel_by_me)
-        parcel.writeString(duration)
+        parcel.writeLong(duration)
         parcel.writeInt(is_working)
         parcel.writeString(start_at)
         parcel.writeString(complete_at)

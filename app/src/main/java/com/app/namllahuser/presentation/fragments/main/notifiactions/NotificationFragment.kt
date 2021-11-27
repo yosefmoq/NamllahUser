@@ -12,6 +12,7 @@ import com.app.namllahuser.R
 import com.app.namllahuser.data.model.NotificationDto
 import com.app.namllahuser.databinding.FragmentNotificationBinding
 import com.app.namllahuser.presentation.fragments.main.adapter.NotificationAdapter
+import com.app.namllahuser.presentation.service.MyFirebaseInstanceIDService
 import com.app.namllahuser.presentation.utils.DialogUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,11 +23,12 @@ class NotificationFragment : Fragment() {
     lateinit var dialogUtils: DialogUtils
     lateinit var fragmentNotificationBinding: FragmentNotificationBinding
     lateinit var notificationAdapter: NotificationAdapter
-    val notificationData = mutableListOf<NotificationDto>()
+    private val notificationData = mutableListOf<NotificationDto>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         fragmentNotificationBinding = FragmentNotificationBinding.inflate(inflater,container,false)
         return fragmentNotificationBinding.root.also {
@@ -37,22 +39,27 @@ class NotificationFragment : Fragment() {
             fragmentNotificationBinding.rvNotification.adapter = notificationAdapter
             dialogUtils = DialogUtils(requireActivity())
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         notificationViewModel.getNotification()
+
+        MyFirebaseInstanceIDService.Notification.instance!!.getNewOrder().observe(viewLifecycleOwner){
+            notificationViewModel.getNotification()
+        }
         observeData()
     }
 
     fun observeData(){
-        notificationViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
+        notificationViewModel.loadingLiveData.observe(viewLifecycleOwner, {
             dialogUtils.loading(it)
         })
-        notificationViewModel.notificationLiveData.observe(viewLifecycleOwner, Observer {
+        notificationViewModel.notificationLiveData.observe(viewLifecycleOwner, {
             notificationAdapter.update(it.data)
         })
-        notificationViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
+        notificationViewModel.errorLiveData.observe(viewLifecycleOwner, {
             dialogUtils.showFailAlert(it)
         })
     }

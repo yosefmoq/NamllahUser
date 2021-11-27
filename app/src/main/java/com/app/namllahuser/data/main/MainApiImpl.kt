@@ -5,6 +5,7 @@ import com.app.namllahuser.data.base.BaseResponse
 import com.app.namllahuser.data.main.notification.NotificationResponse
 import com.app.namllahuser.data.main.orders.CreateOrderResponse
 import com.app.namllahuser.data.main.orders.OrderResponse
+import com.app.namllahuser.data.main.orders.ShowOrderResponse
 import com.app.namllahuser.data.main.service.ServiceResponse
 import com.app.namllahuser.data.main.serviceProviders.ServiceProviderResponse
 import com.app.namllahuser.data.main.slider.SliderResponse
@@ -245,8 +246,8 @@ class MainApiImpl @Inject constructor(
         }
     }
 
-    fun rateProvider(rate:Int,text:String):Maybe<BaseResponse> = Maybe.create{
-        val response = mainApi.rateProvider(rate, text).execute()
+    fun rateProvider(id:Int,rate:Int,text:String):Maybe<BaseResponse> = Maybe.create{
+        val response = mainApi.rateProvider(id,rate, text).execute()
         if (response.isSuccessful) {
             val gson = GsonBuilder().create()
             val str = JSONObject(response.body()!!.string()).toString()
@@ -282,4 +283,18 @@ class MainApiImpl @Inject constructor(
         }
 
     }
+
+    fun showOrder(id: Long?):Maybe<ShowOrderResponse> =
+        Maybe.create{
+            val response = mainApi.showOrder(id).execute()
+            if (response.isSuccessful) {
+                val gson = GsonBuilder().create()
+                val str = JSONObject(response.body()!!.string()).toString()
+                val signInResponse: ShowOrderResponse = gson.fromJson(str, ShowOrderResponse::class.java)
+                it.onSuccess(signInResponse)
+            } else {
+                it.onError(Throwable(response.errorBody()?.string() ?: "Something went wrong!"))
+            }
+
+        }
 }

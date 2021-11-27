@@ -19,6 +19,7 @@
         android:background="@drawable/bg_rb_custom"
         android:button="@android:color/transparent"
         android:checked="true"
+        android:enabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
@@ -50,6 +51,7 @@
         android:layout_marginStart="@dimen/_24sdp"
         android:background="@drawable/bg_rb_custom"
         android:button="@android:color/transparent"
+        android:enabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vFv" />
 
@@ -82,6 +84,7 @@
         android:background="@drawable/bg_rb_custom_gray"
         android:button="@android:color/transparent"
         android:checked="false"
+        android:enabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vFs" />
 
@@ -114,6 +117,8 @@
         android:background="@drawable/bg_rb_custom_gray"
         android:button="@android:color/transparent"
         android:checked="false"
+        android:enabled="false"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vFt" />
 
@@ -138,6 +143,7 @@
         android:background="@drawable/bg_rb_custom_gray"
         android:button="@android:color/transparent"
         android:checked="false"
+        android:enabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vFf" />
 

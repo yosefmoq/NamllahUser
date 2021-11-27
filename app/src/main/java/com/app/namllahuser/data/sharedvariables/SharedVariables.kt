@@ -24,7 +24,12 @@ class SharedVariables @Inject constructor(mContext: Context) {
     val mSemaphore: Semaphore
 
     fun clearAllData(){
-        mSharedPreferenceEditor.clear().apply()
+        mSharedPreferenceEditor.remove(java.lang.String.valueOf(SharedValueFlags.IS_LOGIN)).apply()
+        mSharedPreferenceEditor.remove(java.lang.String.valueOf(SharedValueFlags.IS_SEEN_ON_BOARDING)).apply()
+        mSharedPreferenceEditor.remove(java.lang.String.valueOf(SharedValueFlags.LANGUAGE)).apply()
+        mSharedPreferenceEditor.remove(java.lang.String.valueOf(SharedValueFlags.METADATA)).apply()
+        mSharedPreferenceEditor.remove(java.lang.String.valueOf(SharedValueFlags.TOKEN)).apply()
+        mSharedPreferenceEditor.remove(java.lang.String.valueOf(SharedValueFlags.USER)).apply()
     }
     fun setStringSharedVariable(flag: SharedValueFlags?, value: String?) {
         try {

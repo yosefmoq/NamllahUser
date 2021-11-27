@@ -40,10 +40,6 @@ class SignInFragment : Fragment(), View.OnClickListener {
         return fragmentSignInBinding?.apply {
             actionOnClick = this@SignInFragment
             dialogUtils =DialogUtils(requireActivity())
-            MyFirebaseInstanceIDService.getObservable().map {
-                Log.v("ttt",it)
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            }
 
         }?.root
     }

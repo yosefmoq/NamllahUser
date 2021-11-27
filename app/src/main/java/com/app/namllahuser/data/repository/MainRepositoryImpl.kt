@@ -7,6 +7,7 @@ import com.app.namllahuser.data.main.MetadataResponse
 import com.app.namllahuser.data.main.notification.NotificationResponse
 import com.app.namllahuser.data.main.orders.CreateOrderResponse
 import com.app.namllahuser.data.main.orders.OrderResponse
+import com.app.namllahuser.data.main.orders.ShowOrderResponse
 import com.app.namllahuser.data.main.service.ServiceResponse
 import com.app.namllahuser.data.main.serviceProviders.ServiceProviderResponse
 import com.app.namllahuser.data.main.slider.SliderResponse
@@ -60,8 +61,9 @@ class MainRepositoryImpl @Inject constructor(
     override fun contactUs(email: String, message: String):Maybe<BaseResponse> = mainApiImpl.contactUS(email,message)
     override fun getOrder(id:Int): Maybe<AOrderModel> = mainApiImpl.getOrder(id)
     override fun payOrder(id: Long, amount: Int): Maybe<BaseResponse> = mainApiImpl.payOrder(id,amount)
-    override fun rateProvider(rate: Int, text: String): Maybe<BaseResponse> = mainApiImpl.rateProvider(rate, text)
+    override fun rateProvider(id:Int,rate: Int, text: String): Maybe<BaseResponse> = mainApiImpl.rateProvider(id,rate, text)
     override fun metadata(): Maybe<MetadataResponse>  = mainApiImpl.metadata()
+    override fun showOrder(id: Long?): Maybe<ShowOrderResponse>  = mainApiImpl.showOrder(id)
 
 
 }

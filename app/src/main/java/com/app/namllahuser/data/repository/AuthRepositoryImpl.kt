@@ -2,7 +2,6 @@ package com.app.namllahuser.data.repository
 
 import com.app.namllahuser.data.auth.AuthApiImpl
 import com.app.namllahuser.data.auth.forget_password.ForgetPasswordResponse
-import com.app.namllahuser.data.auth.reset_password.ResetPasswordResponse
 import com.app.namllahuser.data.auth.sign_in.SignInResponse
 import com.app.namllahuser.data.auth.sign_up.SignUpResponse
 import com.app.namllahuser.data.auth.verification_code.VerificationCodeResponse

@@ -16,37 +16,31 @@ interface AuthApi {
 
     @POST("auth/login")
     fun signIn(
-//        @Header("Authorization") token: String,
         @Body signInRequest: SignInRequest
     ): Call<ResponseBody>
 
     @POST("auth/register")
     fun signUp(
-//        @Header("Authorization") token: String,
         @Body signUpRequest: SignUpRequest
     ): Call<ResponseBody>
 
     @POST("auth/activate-mobile")
     fun verifyOTPCode(
-//        @Header("Authorization") token: String,
         @Body verificationCodeRequest: VerificationCodeRequest
     ): Call<ResponseBody>
 
     @POST("auth/resend-code")
     fun resendOTPCode(
-//        @Header("Authorization") token: String,
         @Body forgetPasswordRequest: ForgetPasswordRequest
     ): Call<ResponseBody>
 
     @POST("auth/forget-password")
     fun forgetPassword(
-//        @Header("Authorization") token: String,
         @Body forgetPasswordRequest: ForgetPasswordRequest
     ): Call<ResponseBody>
 
     @POST("auth/reset-password")
     fun resetPassword(
-//        @Header("Authorization") token: String,
         @Body resetPasswordRequest: ResetPasswordRequest
     ): Call<ResponseBody>
 

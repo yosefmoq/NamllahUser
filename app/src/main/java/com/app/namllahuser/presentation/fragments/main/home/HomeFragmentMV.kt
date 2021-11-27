@@ -64,12 +64,12 @@ class HomeFragmentMV @Inject constructor(
     fun getId():String  = configRepository.getLoggedUser()!!.id.toString()
     fun setTokenFirebase(token: String) = configRepository.setFirebaseToken(token)
 
-    fun saveTokenToServer() {
+    fun saveTokenToServer(token:String) {
         launch {
             disposable.add(
                 mainRepository.updateToken(
                     "android",
-                    configRepository.getFirebaseToken()
+                    token
                 )
                     .subscribeOn(ioScheduler)
                     .observeOn(AndroidSchedulers.mainThread())

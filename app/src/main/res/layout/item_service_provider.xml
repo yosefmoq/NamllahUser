@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/_4sdp">
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvServiceProvider"
@@ -25,6 +25,7 @@
             android:onClick="@{(view)->onServiceProviderClickListener.onServiceProvidersClick(serviceProviderDto)}"
             app:cardCornerRadius="10dp"
             app:cardElevation="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +55,7 @@
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center_vertical"
-                    android:text="@{String.valueOf(serviceProviderDto.rate)}"
+                    android:text="@{String.valueOf(serviceProviderDto.rate/2)}"
                     app:drawableEndCompat="@drawable/ic_star"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

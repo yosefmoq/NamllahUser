@@ -50,14 +50,14 @@ class SliderAdapterExample(context: Context) :
         viewHolder.textViewDescription.setTextColor(Color.WHITE)
 */
         Glide.with(viewHolder.itemView)
-            .load(sliderItem.image.original)
+            .load(sliderItem.image.high)
             .fitCenter()
             .into(viewHolder.imageViewBackground)
-        viewHolder.itemView.setOnClickListener({
+        viewHolder.itemView.setOnClickListener {
             Toast.makeText(context, "This is item in position $position", Toast.LENGTH_SHORT)
                 .show()
 
-        })
+        }
     }
 
     override fun getCount(): Int {

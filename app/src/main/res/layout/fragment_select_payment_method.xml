@@ -189,7 +189,8 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline15"
                 app:layout_constraintStart_toStartOf="@+id/guideline14"
-                app:layout_constraintTop_toBottomOf="@+id/textView50" />
+                app:layout_constraintTop_toBottomOf="@+id/textView50"
+                tools:itemCount="2" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline15"
@@ -203,7 +204,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/rvBills"
                 app:layout_constraintStart_toStartOf="@+id/guideline14"
                 app:layout_constraintTop_toBottomOf="@+id/rvBills">
@@ -271,7 +272,7 @@
                 android:text="@string/confirm"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toStartOf="@+id/guideline15"
                 app:layout_constraintStart_toStartOf="@+id/guideline14"
                 app:layout_constraintTop_toBottomOf="@+id/cvPaymentMethod" />

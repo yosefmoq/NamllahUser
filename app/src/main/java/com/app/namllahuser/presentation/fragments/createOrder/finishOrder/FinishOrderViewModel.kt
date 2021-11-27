@@ -19,9 +19,9 @@ class FinishOrderViewModel @Inject constructor(
     application: Application,
     val mainApi: MainApi,
     val mainRepository: MainRepository
-) :BaseViewModel(application)  {
-    val postOrder = MutableLiveData<CreateOrderResponse>()
+) :BaseViewModel(application){
 
+    val postOrder = MutableLiveData<CreateOrderResponse>()
 
     fun postOrder(createOrderRequest: CreateOrderRequest){
         changeLoadingStatus(true)

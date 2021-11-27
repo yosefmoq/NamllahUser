@@ -1,17 +1,15 @@
 package com.app.namllahuser.presentation.fragments.pages.setting
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.app.namllahuser.R
-import com.app.namllahuser.data.sharedvariables.SharedVariables
 import com.app.namllahuser.databinding.FragmentSettingBinding
-import com.app.namllahuser.domain.SharedValueFlags
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,12 +20,12 @@ class SettingsFragment : Fragment(),View.OnClickListener {
     }
 
     lateinit var fragmentSettingBinding: FragmentSettingBinding
-    private lateinit var viewModel: SettingsViewModel
+     val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         fragmentSettingBinding = FragmentSettingBinding.inflate(inflater,container,false)
 
 
@@ -42,7 +40,12 @@ class SettingsFragment : Fragment(),View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        findNavController(requireParentFragment()).navigate(SettingsFragmentDirections.actionSettingFragmentToLanguageListBottomSheetFragment(1))
+        val lang = if(viewModel.getLang() == "en"){
+            1
+        }else{
+            2
+        }
+        findNavController(requireParentFragment()).navigate(SettingsFragmentDirections.actionSettingFragmentToLanguageListBottomSheetFragment(lang))
     }
 
 

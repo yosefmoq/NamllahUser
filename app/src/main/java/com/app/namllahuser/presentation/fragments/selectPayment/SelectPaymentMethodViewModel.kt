@@ -54,11 +54,11 @@ class SelectPaymentMethodViewModel @Inject constructor(
             )
         }
     }
-    fun rateProvider(rate:Int,text:String){
+    fun rateProvider(id:Int,rate:Int,text:String){
         changeLoadingStatus(true)
         launch {
             disposable.add(
-                mainRepository.rateProvider(rate, text)
+                mainRepository.rateProvider(id,rate, text)
                     .subscribeOn(ioScheduler)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(

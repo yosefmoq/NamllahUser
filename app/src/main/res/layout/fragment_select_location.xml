@@ -14,11 +14,20 @@
 
         <fragment
             android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:name="com.app.namllahuser.presentation.utils.CustomMap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".presentation.fragments.createOrder.SelectLocationFragment"
             tools:layout_editor_absoluteY="0dp" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/editTextTextPersonName2"
@@ -62,14 +71,16 @@
             app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2" />
 
         <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_marker" />
+            android:id="@+id/ivMarker"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/map"
+            app:layout_constraintEnd_toEndOf="@id/map"
+            app:layout_constraintStart_toStartOf="@id/map"
+            app:layout_constraintTop_toTopOf="@id/map"
+            app:srcCompat="@drawable/ic_placeholder" />
 
         <ImageView
             android:id="@+id/ivShotting"
@@ -80,7 +91,6 @@
             android:onClick="@{(view)->onClick.onClick(view)}"
             app:layout_constraintBottom_toTopOf="@+id/btnConfirmLocation"
             app:layout_constraintEnd_toEndOf="parent"
-
-            app:srcCompat="@drawable/ic_shooting" />
+            app:srcCompat="@drawable/ic_precision" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
