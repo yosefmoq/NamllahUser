@@ -17,6 +17,10 @@ interface MainApi {
     @GET("customer/orders/near-by-provider")
     fun getNearServiceProviders(@Query("lat") lat: Double,@Query("lng") lng: Double,@Query("service_id") serviceId:Int):Call<ResponseBody>
 
+    @GET("customer/orders/{id}")
+    fun showOrder(@Path("id") id: Long?):Call<ResponseBody>
+
+
     @GET("customer/orders")
     fun getOrders():Call<ResponseBody>
 
@@ -82,6 +86,7 @@ interface MainApi {
 
     @FormUrlEncoded
     @POST("customer/orders/{id}/rate")
-    fun rateProvider(@Field("rate") rate:Int,@Field("text") text:String):Call<ResponseBody>
+    fun rateProvider(@Path("id") id:Int,@Field("rate") rate:Int, @Field("text") text:String):Call<ResponseBody>
+
 
 }

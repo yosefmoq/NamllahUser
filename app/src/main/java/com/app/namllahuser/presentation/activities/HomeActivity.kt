@@ -30,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+3"));
 
         if(intent.getIntExtra("type",0)==2){
 

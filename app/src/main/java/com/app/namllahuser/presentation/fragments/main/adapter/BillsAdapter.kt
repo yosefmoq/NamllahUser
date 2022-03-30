@@ -18,13 +18,13 @@ class BillsAdapter(var context: Context, var list: MutableList<BillsData>) :
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: BillsViewHolder, position: Int){
-        holder.itemBillsImageBinding.url = list.get(position).image.original
+        holder.itemBillsImageBinding.url = list[position].image.original
         holder.itemBillsImageBinding.executePendingBindings()
     }
 
     fun update(list:MutableList<BillsData>){
         this.list.clear()
         this.list.addAll(list)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0,list.size-1)
     }
 }

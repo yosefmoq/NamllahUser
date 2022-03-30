@@ -36,7 +36,9 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         fragmentSplashBinding = FragmentSplashBinding.inflate(inflater, container, false)
-        return fragmentSplashBinding?.apply { }?.root
+        return fragmentSplashBinding?.apply {
+
+        }?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

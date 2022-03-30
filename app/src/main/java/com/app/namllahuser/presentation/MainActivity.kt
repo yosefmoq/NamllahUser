@@ -31,22 +31,21 @@ class MainActivity : AppCompatActivity(),
     private val mainViewModel: MainViewModel by viewModels()
     lateinit var mainActivityMainBinding: ActivityMainBinding
     override fun attachBaseContext(newBase: Context) {
-        // get chosen language from shread preference
+        // get chosen language from shared preference
         val loggedUser = SharedVariables(newBase).getStringSharedVariable(SharedValueFlags.LANGUAGE,"en")
         val language = loggedUser
         val localeToSwitchTo = Locale(language ?: "en")
         val localeUpdatedContext: ContextWrapper =
             ContextUtils.updateLocale(newBase, localeToSwitchTo)
         super.attachBaseContext(localeUpdatedContext)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-
-
         setContentView(mainActivityMainBinding.root)
-
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+3"));
 
     }
 

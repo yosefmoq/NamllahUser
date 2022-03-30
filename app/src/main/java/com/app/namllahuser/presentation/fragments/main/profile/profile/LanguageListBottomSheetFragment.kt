@@ -50,6 +50,7 @@ class LanguageListBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
             actionOnClick = this@LanguageListBottomSheetFragment
             Timber.tag(TAG).d("onCreateView : currentLanguage ${this@LanguageListBottomSheetFragment.currentLanguage}")
             currentLanguage = this@LanguageListBottomSheetFragment.currentLanguage
+
         }?.root
     }
 
@@ -77,23 +78,8 @@ class LanguageListBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
                 Timber.tag(TAG)
                     .d("observeLiveData : updateUserProfileResponse $updateUserProfileResponse")
                 if (updateUserProfileResponse.status!!) {
-                    val mStartActivity = Intent(
-                        requireContext(),
-                        MainActivity::class.java
-                    ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    val mPendingIntentId = 123456
-                    val mPendingIntent = PendingIntent.getActivity(
-                        requireContext(),
-                        mPendingIntentId,
-                        mStartActivity,
-                        PendingIntent.FLAG_CANCEL_CURRENT
-                    )
-                    val mng:AlarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    mng.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent)
-                    System.exit(0)
-
-
-
+                    startActivity(Intent(requireContext(),MainActivity::class.java))
+                    requireActivity().finish()
 /*
                     com.app.namllahuser.presentation.base.ContextUtils.updateLocale(requireContext(), Locale(newLanguage))
 

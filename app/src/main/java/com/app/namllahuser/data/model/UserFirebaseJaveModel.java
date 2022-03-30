@@ -1,21 +1,22 @@
 package com.app.namllahuser.data.model;
 
 public class UserFirebaseJaveModel {
-    private long complete_at;
+    private Long complete_at;
     private long duration;
     private boolean is_working;
     private long order_id;
+    private int status_id = 1;
     private String type;
 
     UserFirebaseJaveModel(){
 
     }
 
-    public long getComplete_at() {
+    public Long getComplete_at() {
         return complete_at;
     }
 
-    public void setComplete_at(long complete_at) {
+    public void setComplete_at(Long complete_at) {
         this.complete_at = complete_at;
     }
 
@@ -50,4 +51,13 @@ public class UserFirebaseJaveModel {
     public void setType(String type) {
         this.type = type;
     }
+
+    public int getStatus_id() {
+        return status_id;
+    }
+
+    public void setStatus_id(int type) {
+        this.status_id = type;
+    }
+
 }

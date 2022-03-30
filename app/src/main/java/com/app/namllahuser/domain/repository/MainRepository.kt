@@ -6,6 +6,7 @@ import com.app.namllahuser.data.main.MetadataResponse
 import com.app.namllahuser.data.main.notification.NotificationResponse
 import com.app.namllahuser.data.main.orders.CreateOrderResponse
 import com.app.namllahuser.data.main.orders.OrderResponse
+import com.app.namllahuser.data.main.orders.ShowOrderResponse
 import com.app.namllahuser.data.main.service.ServiceResponse
 import com.app.namllahuser.data.main.serviceProviders.ServiceProviderResponse
 import com.app.namllahuser.data.main.slider.SliderResponse
@@ -51,9 +52,10 @@ interface MainRepository {
 
     fun payOrder(id: Long, amount:Int):Maybe<BaseResponse>
 
-    fun rateProvider(rate:Int,text:String):Maybe<BaseResponse>
+    fun rateProvider(id:Int,rate:Int,text:String):Maybe<BaseResponse>
 
     fun metadata():Maybe<MetadataResponse>
 
+    fun showOrder(id: Long?):Maybe<ShowOrderResponse>
 
 }

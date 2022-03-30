@@ -1,10 +1,12 @@
 package com.app.namllahuser.presentation.fragments.selectPayment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,9 +16,11 @@ import com.app.namllahuser.R
 import com.app.namllahuser.data.model.AOrderModel
 import com.app.namllahuser.data.model.BillsData
 import com.app.namllahuser.data.model.order.OrderDto
+import com.app.namllahuser.databinding.DialogRateBinding
 import com.app.namllahuser.databinding.FragmentSelectPaymentMethodBinding
 import com.app.namllahuser.presentation.fragments.main.adapter.BillsAdapter
 import com.app.namllahuser.presentation.utils.DialogUtils
+import com.app.namllahuser.presentation.utils.toCountUp
 import com.app.namllahuser.presentation.utils.toHours
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -79,10 +83,13 @@ class SelectPaymentMethodFragment : Fragment(), View.OnClickListener {
         selectPaymentMethodViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
             dialogUtils.loading(it)
         })
+        selectPaymentMethodViewModel.rateProviderMutableData.observe(viewLifecycleOwner){
+            findNavController().popBackStack()
+        }
         selectPaymentMethodViewModel.payOrderMutableData.observe(viewLifecycleOwner, Observer {
             if(it.status!!){
                 dialogUtils.showSuccessAlert(it.msg!!)
-                findNavController().popBackStack()
+                showRateDialog()
 
             }else{
                 dialogUtils.showFailAlert(it.msg!!)
@@ -95,7 +102,8 @@ class SelectPaymentMethodFragment : Fragment(), View.OnClickListener {
             fragmentSelectPaymentMethodBinding.orderDto = aOrderModel.data
             fragmentSelectPaymentMethodBinding.boughtPrice =
                 "${aOrderModel.data.bring_times * 9} SR"
-            fragmentSelectPaymentMethodBinding.hours = aOrderModel.data.duration.toLong().toHours()
+            fragmentSelectPaymentMethodBinding.hours = aOrderModel.data.duration.toCountUp()
+            Log.v("ttt","${aOrderModel.data.duration}")
             fragmentSelectPaymentMethodBinding.executePendingBindings()
             adapter.update(aOrderModel.data.bills!!)
             orderId = aOrderModel.data.id!!
@@ -122,5 +130,29 @@ class SelectPaymentMethodFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    fun showRateDialog(){
+        val viewGroup: ViewGroup =
+            requireActivity().window.findViewById(android.R.id.content)
+        val dialogReportBinding =
+            DialogRateBinding.inflate(LayoutInflater.from(context), viewGroup, false)
+
+        val builder: AlertDialog.Builder =
+            AlertDialog.Builder(requireActivity(), R.style.CustomAlertDialog)
+
+        builder.setCancelable(false)
+
+
+
+        builder.setView(dialogReportBinding.root)
+
+
+        val alertDialog: AlertDialog = builder.create()
+
+        dialogReportBinding.button5.setOnClickListener {
+            selectPaymentMethodViewModel.rateProvider(orderId.toInt(),dialogReportBinding.ratingBar.numStars*2,"111")
+            alertDialog.hide()
+        }
+        alertDialog.show()
+    }
 
 }

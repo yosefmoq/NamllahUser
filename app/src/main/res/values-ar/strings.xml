@@ -122,6 +122,8 @@
     <string name="hello">مرحبا,</string>
     <string name="whatsService">ما هي الخدمة التي تبحث عنها؟</string>
     <string name="pickUp">إختيار موقعي </string>
+    <string name="timeIsRunning">العداد يعمل</string>
+    <string name="timerDescription">العداد في حالة عمل</string>
 
 
 </resources>

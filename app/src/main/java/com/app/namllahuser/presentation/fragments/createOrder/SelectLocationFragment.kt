@@ -1,8 +1,8 @@
 package com.app.namllahuser.presentation.fragments.createOrder
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
@@ -14,13 +14,13 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.app.namllahuser.R
 import com.app.namllahuser.data.model.ServiceDto
 import com.app.namllahuser.databinding.FragmentSelectLocationBinding
 import com.app.namllahuser.presentation.receiver.GpsLocationReceiver
@@ -30,60 +30,121 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
+import android.graphics.Bitmap
+import com.app.namllahuser.R
+import androidx.core.content.ContextCompat
+import android.graphics.Canvas
+import com.app.namllahuser.presentation.utils.CustomMap
 
 @AndroidEntryPoint
 class SelectLocationFragment : Fragment(), View.OnClickListener,
     EasyPermissions.PermissionCallbacks, GpsLocationReceiver.OnGpsChanged {
-    private val UPDATE_INTERVAL = 120 * 1000 /* 10 secs */.toLong()
-    private val FASTEST_INTERVAL: Long = 60000 /* 2 sec */
+    private val UPDATE_INTERVAL = 180 * 1000 /* 10 secs */.toLong()
+    private val FASTEST_INTERVAL: Long = 600000 /* 2 sec */
     private var mLocationRequest: LocationRequest? = null
-
+    private var zoom = 13f;
 
     lateinit var gpsLocationReceiver: GpsLocationReceiver
-    lateinit var gpsUtils: GpsUtils
+    private lateinit var gpsUtils: GpsUtils
     lateinit var fragmentSelectLocationBinding: FragmentSelectLocationBinding
     private var fusedLocationProvider: FusedLocationProviderClient? = null
     private val MY_PERMISSIONS_REQUEST_LOCATION = 1234
     lateinit var googleMap: GoogleMap
     var lat: Double = 0.0
     var lng: Double = 0.0
+    var selectedLat: Double = 0.0
+    var selectedLng: Double = 0.0
     lateinit var serviceDto: ServiceDto
 
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-/*
-*/
-/*
-        googleMap.setOnMapClickListener {
-            googleMap.clear()
-            lat = it.latitude
-            lng = it.longitude
-            val sydney = LatLng(lat, lng)
-            googleMap.addMarker(MarkerOptions().position(sydney).title("My Location"))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
+        this.googleMap = googleMap
+
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(LatLng(23.8859, 45.0792)))
+       /* googleMap.setOnCameraMoveListener {
+            if (zoom == googleMap.cameraPosition.zoom) {
+                googleMap.clear()
+            }else{
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(LatLng(selectedLat,selectedLng)))
+            }
+            Log.v("tttt","visible the marker view")
+
+            fragmentSelectLocationBinding.ivMarker.visibility =
+                View.VISIBLE
+        }*/
+        googleMap.setOnCameraMoveStartedListener {
+            when(it){
+                GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE -> {
+                    if(zoom == googleMap.cameraPosition.zoom){
+                        googleMap.clear()
+                        fragmentSelectLocationBinding.ivMarker.visibility = View.VISIBLE
+
+                    }
+
+                }
+
+            }
 
         }
-*/
+        googleMap.setOnCameraIdleListener {
+            Log.v("tttt","Zoom :: $zoom")
+            Log.v("tttt","Camera Position Zoom :: ${googleMap.cameraPosition.zoom}")
+            if (zoom == googleMap.cameraPosition.zoom) {
+                zoom = googleMap.cameraPosition.zoom
+                Log.v("tttt","changed Marker")
+                googleMap.clear()
+                googleMap.addMarker(
+                    MarkerOptions().position(googleMap.cameraPosition.target)
+                        .title("My Location").icon(
+                            bitmapDescriptorFromVector(requireContext(), R.drawable.ic_placeholder)
+                        )
+                )
+                selectedLat = googleMap.cameraPosition.target.latitude
+                selectedLng = googleMap.cameraPosition.target.longitude
+                fragmentSelectLocationBinding.ivMarker.visibility = View.GONE
+            } else {
+                Log.v("tttt","Zoom changed")
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(LatLng(selectedLat,selectedLng)))
+                zoom = googleMap.cameraPosition.zoom
+                fragmentSelectLocationBinding.ivMarker.visibility = View.GONE
 
-        this.googleMap = googleMap
+
+            }
+
+        }
+
+        /*  googleMap.setOnCameraMoveListener {
+              val aa = googleMap.cameraPosition.target
+              if (selectedLat != 0.0) {
+                  if (zoom == googleMap.cameraPosition.zoom) {
+                      selectedLat = aa.latitude
+                      selectedLng = aa.longitude
+                  } else {
+                      googleMap.animateCamera(
+                          CameraUpdateFactory.newLatLng(
+                              LatLng(
+                                  selectedLat,
+                                  selectedLng
+                              )
+                          )
+                      )
+                  }
+              }
+
+          }*/
         googleMap.uiSettings.isZoomControlsEnabled = true
         googleMap.uiSettings.isMyLocationButtonEnabled = true
 
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -94,23 +155,65 @@ class SelectLocationFragment : Fragment(), View.OnClickListener,
         fusedLocationProvider =
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
+
         return fragmentSelectLocationBinding.root.apply {
             gpsUtils = GpsUtils(requireActivity())
             turnGps()
             fragmentSelectLocationBinding.onClick = this@SelectLocationFragment
+/*            fragmentSelectLocationBinding.view4.setOnTouchListener { v, event ->
+                when (event?.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        googleMap.clear()
+                        fragmentSelectLocationBinding.ivMarker.visibility = View.VISIBLE
+                    }
+                    MotionEvent.ACTION_UP ->{
+                        googleMap.addMarker(MarkerOptions().position(googleMap.cameraPosition.target).title("My Location").icon(
+                                bitmapDescriptorFromVector(requireContext(),R.drawable.ic_placeholder)
+                                ))
+                        selectedLat = googleMap.cameraPosition.target.latitude
+                        selectedLng = googleMap.cameraPosition.target.longitude
+                        fragmentSelectLocationBinding.ivMarker.visibility = View.GONE
+
+                    }
+                }
+
+                    true
+            }*/
+
+
         }
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as CustomMap?
+
+        mapFragment!!.setNonConsumingTouchListener(object : CustomMap.NonConsumingTouchListener {
+            override fun onTouch(motionEvent: MotionEvent?): Boolean {
+
+                if (MotionEvent.ACTION_UP == motionEvent!!.action) {
+                    Log.v("ttt", "Action Up")
+                    Log.v("ttt", "pointer Count :: ${motionEvent.pointerCount}")
+
+
+                }
+
+                if (MotionEvent.ACTION_DOWN == motionEvent.action) {
+                    Log.v("ttt", "pointer Count :: ${motionEvent.pointerCount}")
+
+
+                }
+
+                return true
+            }
+
+        })
+        mapFragment.getMapAsync(callback)
         arguments.let {
             serviceDto = SelectLocationFragmentArgs.fromBundle(it!!).service
         }
+
 
         gpsLocationReceiver = GpsLocationReceiver(this)
 
@@ -216,16 +319,16 @@ class SelectLocationFragment : Fragment(), View.OnClickListener,
         googleMap.clear()
         val sydney = LatLng(lat, lng)
 
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13f))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoom))
     }
 
     private fun confirmLocation() {
-        if (lat != 0.0 && lng != 0.0) {
+        if (selectedLat != 0.0 && selectedLng != 0.0) {
             findNavController().navigate(
                 SelectLocationFragmentDirections.actionSelectLocationFragmentToServiceProviderFragment(
                     service = serviceDto,
-                    lat = lat.toString() /*lat.toString()*/,
-                    lng = lng.toString()
+                    lat = selectedLat.toString() /*lat.toString()*/,
+                    lng = selectedLng.toString()
                 )
             )
         }
@@ -271,7 +374,7 @@ class SelectLocationFragment : Fragment(), View.OnClickListener,
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             locationMode = try {
                 Settings.Secure.getInt(
-                    context.getContentResolver(),
+                    context.contentResolver,
                     Settings.Secure.LOCATION_MODE
                 )
             } catch (e: Settings.SettingNotFoundException) {
@@ -294,11 +397,7 @@ class SelectLocationFragment : Fragment(), View.OnClickListener,
     }
 
 
-    override fun onStop() {
-        super.onStop()
-
-    }
-
+    @SuppressLint("MissingPermission")
     protected fun startLocationUpdates() {
 
         // Create the location request to start receiving updates
@@ -339,12 +438,27 @@ class SelectLocationFragment : Fragment(), View.OnClickListener,
 //                    googleMap.addMarker(MarkerOptions().position(sydney).title("My Location"))
                     val sydney = LatLng(lat, lng)
 
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13f))
+                    googleMap.addMarker(
+                        MarkerOptions().position(sydney).title("My Location").icon(
+                            bitmapDescriptorFromVector(requireContext(), R.drawable.ic_placeholder)
+                        )
+                    )
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoom))
+
 
                 }
             },
-            Looper.myLooper()
+            Looper.myLooper()!!
         )
     }
 
+    private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+        return ContextCompat.getDrawable(context, vectorResId)?.run {
+            setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+            val bitmap =
+                Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+            draw(Canvas(bitmap))
+            BitmapDescriptorFactory.fromBitmap(bitmap)
+        }
+    }
 }

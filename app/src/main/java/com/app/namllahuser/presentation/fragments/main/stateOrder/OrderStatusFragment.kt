@@ -2,26 +2,25 @@ package com.app.namllahuser.presentation.fragments.main.stateOrder
 
 import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.app.namllahuser.R
 import com.app.namllahuser.data.model.order.OrderDto
 import com.app.namllahuser.databinding.FragmentOrderStatusBinding
 import com.app.namllahuser.presentation.activities.HomeActivity
+import com.app.namllahuser.presentation.service.MyFirebaseInstanceIDService
 import com.app.namllahuser.presentation.utils.DialogUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter
@@ -30,19 +29,16 @@ import pub.devrel.easypermissions.PermissionRequest
 
 
 @AndroidEntryPoint
-class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
+class OrderStatusFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     lateinit var fragmentOrderStatusBinding: FragmentOrderStatusBinding
-    lateinit var orderDto:OrderDto
-    val MY_PERMISSIONS_REQUEST_LOCATION = 13
+    lateinit var orderDto: OrderDto
+    private val MY_PERMISSIONS_REQUEST_LOCATION = 13
 
-    lateinit var dialogUtils:DialogUtils
-     var status:Int = 0
-    companion object {
-        fun newInstance() = OrderStatusFragment()
-    }
+    lateinit var dialogUtils: DialogUtils
+    var status: Int = 0
 
 
-    private  val  viewModel: OrderStatusViewModel by viewModels()
+    private val viewModel: OrderStatusViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,12 +50,13 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
             fragmentOrderStatusBinding.include.ivToolbarMenu.visibility = View.VISIBLE
             dialogUtils = DialogUtils(requireActivity())
             fragmentOrderStatusBinding.include.ivToolbarMenu.setOnClickListener {
-                val popup = PopupMenu(requireContext(), fragmentOrderStatusBinding.include.ivToolbarMenu)
-                popup.menuInflater.inflate(R.menu.cancel_menu,popup.menu)
+                val popup =
+                    PopupMenu(requireContext(), fragmentOrderStatusBinding.include.ivToolbarMenu)
+                popup.menuInflater.inflate(R.menu.cancel_menu, popup.menu)
                 popup.setOnMenuItemClickListener {
-                    viewModel.cancelOrder(orderDto.id!!.toInt(),1,"too late")
+                    viewModel.cancelOrder(orderDto.id!!.toInt(), 1, "too late")
 
-                    return@setOnMenuItemClickListener  true
+                    return@setOnMenuItemClickListener true
                 }
                 popup.show()
 
@@ -71,7 +68,7 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
             arguments.apply {
                 status = OrderStatusFragmentArgs.fromBundle(this!!).status
                 orderDto = OrderStatusFragmentArgs.fromBundle(this).orderDto
-                step(status)
+                viewModel.showOrder(orderDto.id)
 
             }
         }
@@ -82,29 +79,37 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
         super.onViewCreated(view, savedInstanceState)
         observeData()
 
+        MyFirebaseInstanceIDService.Notification.instance!!.getNewOrder()
+            .observe(viewLifecycleOwner) {
+                viewModel.showOrder(orderDto.id)
+
+            }
     }
 
     private fun observeData() {
         viewModel.cancelRequestMutableData.observe(viewLifecycleOwner, Observer {
-            if(it.status!!){
+            if (it.status!!) {
                 dialogUtils.showSuccessAlert(it.msg!!)
-            }else{
+            } else {
                 dialogUtils.showFailAlert(it.msg!!)
 
             }
             requireActivity().finish()
-            requireActivity().startActivity(HomeActivity.getIntent(requireActivity(),1,null))
+            requireActivity().startActivity(HomeActivity.getIntent(requireActivity(), 1, null))
+        })
+        viewModel.showOrderMutableData.observe(viewLifecycleOwner, Observer {
+            step(it.data.status.id)
         })
         viewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
             dialogUtils.loading(it)
-
+            Build.VERSION_CODES.N_MR1
         })
         fragmentOrderStatusBinding.fabSpeed.setMenuListener(object : SimpleMenuListenerAdapter() {
             override fun onMenuItemSelected(menuItem: MenuItem?): Boolean {
-                when(menuItem!!.itemId){
-                    R.id.itemCall ->handleCall()
-                    R.id.itemMessage ->handleMessage()
-                    R.id.itemWhatsapp ->handleWhatsapp()
+                when (menuItem!!.itemId) {
+                    R.id.itemCall -> handleCall()
+                    R.id.itemMessage -> handleMessage()
+                    R.id.itemWhatsapp -> handleWhatsapp()
                 }
                 return true
             }
@@ -121,18 +126,18 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
 
     private fun handleWhatsapp() {
         val i = Intent(Intent.ACTION_VIEW)
-        i.data = Uri.parse("https://wa.me/966"+orderDto.provider.mobile)
+        i.data = Uri.parse("https://wa.me/966" + orderDto.provider.mobile)
         startActivity(i)
 
     }
 
     private fun handleCall() {
-        if(checkLocationPermission()){
+        if (checkLocationPermission()) {
             val uri = "tel:" + orderDto.provider.mobile
             val intent = Intent(Intent.ACTION_CALL)
             intent.data = Uri.parse(uri)
             startActivity(intent)
-        }else{
+        } else {
             requestLocationPermission()
         }
 
@@ -140,18 +145,18 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
     }
 
     fun step(step: Int) {
-        if(status == 1){
+        if (status == 1) {
             fragmentOrderStatusBinding.fabSpeed.visibility = View.GONE
             fragmentOrderStatusBinding.include.ivToolbarMenu.visibility = View.VISIBLE
-        }else{
+        } else {
             fragmentOrderStatusBinding.fabSpeed.visibility = View.VISIBLE
             fragmentOrderStatusBinding.include.ivToolbarMenu.visibility = View.GONE
         }
         when (step) {
             1 -> makeOneActive()
             2 -> makeTwoActive()
-            3,4 -> makeThreeActive()
-            5,6 -> makeFourActive()
+            3, 4 -> makeThreeActive()
+            5, 6 -> makeFourActive()
             7 -> makeFifeActive()
         }
     }
@@ -189,13 +194,14 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
         makeFourSelected()
     }
 
-    private fun makeFourSelected(){
+    private fun makeFourSelected() {
         fragmentOrderStatusBinding.tvFour.setTextColor(Color.parseColor("#0080C6"))
         fragmentOrderStatusBinding.rb4.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_rb_custom)
         fragmentOrderStatusBinding.rb4.isChecked = false
 
     }
+
     private fun makeFourActive() {
         makeThreeActive()
         fragmentOrderStatusBinding.rb4.background =
@@ -206,12 +212,13 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
         makeFiveSelected()
     }
 
-    private fun makeFiveSelected(){
+    private fun makeFiveSelected() {
         fragmentOrderStatusBinding.tvFive.setTextColor(Color.parseColor("#0080C6"))
         fragmentOrderStatusBinding.rb5.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_rb_custom)
         fragmentOrderStatusBinding.rb5.isChecked = false
     }
+
     private fun makeFifeActive() {
         makeFourActive()
         fragmentOrderStatusBinding.rb5.background =
@@ -220,17 +227,23 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
         fragmentOrderStatusBinding.tvFive.setTextColor(Color.WHITE)
 
     }
+
     fun checkLocationPermission(): Boolean =
-        EasyPermissions.hasPermissions(requireContext(),Manifest.permission.CALL_PHONE)
+        EasyPermissions.hasPermissions(requireContext(), Manifest.permission.CALL_PHONE)
 
 
     fun requestLocationPermission() {
-            EasyPermissions.requestPermissions(
-                PermissionRequest.Builder(requireActivity(), MY_PERMISSIONS_REQUEST_LOCATION, Manifest.permission.CALL_PHONE)
+        EasyPermissions.requestPermissions(
+            PermissionRequest.Builder(
+                requireActivity(),
+                MY_PERMISSIONS_REQUEST_LOCATION,
+                Manifest.permission.CALL_PHONE
+            )
                 .setRationale("Location permission")
                 .setPositiveButtonText("Ok")
                 .setNegativeButtonText("Cancel")
-                .build())
+                .build()
+        )
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
@@ -247,6 +260,11 @@ class OrderStatusFragment : Fragment() ,EasyPermissions.PermissionCallbacks{
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,requireActivity())
+        EasyPermissions.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults,
+            requireActivity()
+        )
     }
 }
